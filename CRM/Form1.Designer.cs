@@ -34,6 +34,14 @@
             this.DGVProductosFactura = new System.Windows.Forms.DataGridView();
             this.BtnSerializar = new System.Windows.Forms.Button();
             this.BtnDeserializar = new System.Windows.Forms.Button();
+            this.CBSucursal = new System.Windows.Forms.ComboBox();
+            this.LblPrecioUnitario = new System.Windows.Forms.Label();
+            this.LblTotal = new System.Windows.Forms.Label();
+            this.LblSubtotal = new System.Windows.Forms.Label();
+            this.LblIVA = new System.Windows.Forms.Label();
+            this.LblCantidadProductos = new System.Windows.Forms.Label();
+            this.BtnFinalizar = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DGVProductosFactura)).BeginInit();
             this.SuspendLayout();
             // 
@@ -41,7 +49,7 @@
             // 
             this.CBProductos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBProductos.FormattingEnabled = true;
-            this.CBProductos.Location = new System.Drawing.Point(37, 129);
+            this.CBProductos.Location = new System.Drawing.Point(12, 129);
             this.CBProductos.Name = "CBProductos";
             this.CBProductos.Size = new System.Drawing.Size(155, 29);
             this.CBProductos.TabIndex = 0;
@@ -49,7 +57,7 @@
             // 
             // BtnAgregar
             // 
-            this.BtnAgregar.Location = new System.Drawing.Point(312, 128);
+            this.BtnAgregar.Location = new System.Drawing.Point(417, 127);
             this.BtnAgregar.Name = "BtnAgregar";
             this.BtnAgregar.Size = new System.Drawing.Size(86, 29);
             this.BtnAgregar.TabIndex = 2;
@@ -59,7 +67,7 @@
             // 
             // TBCantidad
             // 
-            this.TBCantidad.Location = new System.Drawing.Point(216, 129);
+            this.TBCantidad.Location = new System.Drawing.Point(251, 128);
             this.TBCantidad.Name = "TBCantidad";
             this.TBCantidad.Size = new System.Drawing.Size(68, 29);
             this.TBCantidad.TabIndex = 1;
@@ -70,16 +78,17 @@
             this.DGVProductosFactura.AllowUserToDeleteRows = false;
             this.DGVProductosFactura.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DGVProductosFactura.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGVProductosFactura.Location = new System.Drawing.Point(109, 227);
+            this.DGVProductosFactura.Location = new System.Drawing.Point(12, 210);
             this.DGVProductosFactura.Name = "DGVProductosFactura";
             this.DGVProductosFactura.ReadOnly = true;
+            this.DGVProductosFactura.RowHeadersVisible = false;
             this.DGVProductosFactura.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGVProductosFactura.Size = new System.Drawing.Size(529, 150);
             this.DGVProductosFactura.TabIndex = 3;
             // 
             // BtnSerializar
             // 
-            this.BtnSerializar.Location = new System.Drawing.Point(507, 119);
+            this.BtnSerializar.Location = new System.Drawing.Point(612, 486);
             this.BtnSerializar.Name = "BtnSerializar";
             this.BtnSerializar.Size = new System.Drawing.Size(75, 38);
             this.BtnSerializar.TabIndex = 4;
@@ -89,7 +98,7 @@
             // 
             // BtnDeserializar
             // 
-            this.BtnDeserializar.Location = new System.Drawing.Point(663, 119);
+            this.BtnDeserializar.Location = new System.Drawing.Point(742, 486);
             this.BtnDeserializar.Name = "BtnDeserializar";
             this.BtnDeserializar.Size = new System.Drawing.Size(75, 38);
             this.BtnDeserializar.TabIndex = 5;
@@ -97,12 +106,92 @@
             this.BtnDeserializar.UseVisualStyleBackColor = true;
             this.BtnDeserializar.Click += new System.EventHandler(this.BtnDeserializar_Click);
             // 
+            // CBSucursal
+            // 
+            this.CBSucursal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBSucursal.FormattingEnabled = true;
+            this.CBSucursal.Location = new System.Drawing.Point(12, 12);
+            this.CBSucursal.Name = "CBSucursal";
+            this.CBSucursal.Size = new System.Drawing.Size(292, 29);
+            this.CBSucursal.TabIndex = 6;
+            this.CBSucursal.SelectedIndexChanged += new System.EventHandler(this.CBSucursal_SelectedIndexChanged);
+            // 
+            // LblPrecioUnitario
+            // 
+            this.LblPrecioUnitario.AutoSize = true;
+            this.LblPrecioUnitario.Location = new System.Drawing.Point(185, 132);
+            this.LblPrecioUnitario.Name = "LblPrecioUnitario";
+            this.LblPrecioUnitario.Size = new System.Drawing.Size(30, 21);
+            this.LblPrecioUnitario.TabIndex = 7;
+            this.LblPrecioUnitario.Text = "PU";
+            // 
+            // LblTotal
+            // 
+            this.LblTotal.AutoSize = true;
+            this.LblTotal.Location = new System.Drawing.Point(590, 301);
+            this.LblTotal.Name = "LblTotal";
+            this.LblTotal.Size = new System.Drawing.Size(19, 21);
+            this.LblTotal.TabIndex = 8;
+            this.LblTotal.Text = "0";
+            // 
+            // LblSubtotal
+            // 
+            this.LblSubtotal.AutoSize = true;
+            this.LblSubtotal.Location = new System.Drawing.Point(590, 210);
+            this.LblSubtotal.Name = "LblSubtotal";
+            this.LblSubtotal.Size = new System.Drawing.Size(19, 21);
+            this.LblSubtotal.TabIndex = 9;
+            this.LblSubtotal.Text = "0";
+            // 
+            // LblIVA
+            // 
+            this.LblIVA.AutoSize = true;
+            this.LblIVA.Location = new System.Drawing.Point(590, 259);
+            this.LblIVA.Name = "LblIVA";
+            this.LblIVA.Size = new System.Drawing.Size(19, 21);
+            this.LblIVA.TabIndex = 10;
+            this.LblIVA.Text = "0";
+            // 
+            // LblCantidadProductos
+            // 
+            this.LblCantidadProductos.AutoSize = true;
+            this.LblCantidadProductos.Location = new System.Drawing.Point(590, 339);
+            this.LblCantidadProductos.Name = "LblCantidadProductos";
+            this.LblCantidadProductos.Size = new System.Drawing.Size(19, 21);
+            this.LblCantidadProductos.TabIndex = 11;
+            this.LblCantidadProductos.Text = "0";
+            // 
+            // BtnFinalizar
+            // 
+            this.BtnFinalizar.Location = new System.Drawing.Point(317, 486);
+            this.BtnFinalizar.Name = "BtnFinalizar";
+            this.BtnFinalizar.Size = new System.Drawing.Size(86, 38);
+            this.BtnFinalizar.TabIndex = 12;
+            this.BtnFinalizar.Text = "Finalizar";
+            this.BtnFinalizar.UseVisualStyleBackColor = true;
+            this.BtnFinalizar.Click += new System.EventHandler(this.BtnFinalizar_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(55, 409);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 29);
+            this.textBox1.TabIndex = 13;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(953, 576);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.BtnFinalizar);
+            this.Controls.Add(this.LblCantidadProductos);
+            this.Controls.Add(this.LblIVA);
+            this.Controls.Add(this.LblSubtotal);
+            this.Controls.Add(this.LblTotal);
+            this.Controls.Add(this.LblPrecioUnitario);
+            this.Controls.Add(this.CBSucursal);
             this.Controls.Add(this.BtnDeserializar);
             this.Controls.Add(this.BtnSerializar);
             this.Controls.Add(this.DGVProductosFactura);
@@ -128,6 +217,14 @@
         private System.Windows.Forms.DataGridView DGVProductosFactura;
         private System.Windows.Forms.Button BtnSerializar;
         private System.Windows.Forms.Button BtnDeserializar;
+        private System.Windows.Forms.ComboBox CBSucursal;
+        private System.Windows.Forms.Label LblPrecioUnitario;
+        private System.Windows.Forms.Label LblTotal;
+        private System.Windows.Forms.Label LblSubtotal;
+        private System.Windows.Forms.Label LblIVA;
+        private System.Windows.Forms.Label LblCantidadProductos;
+        private System.Windows.Forms.Button BtnFinalizar;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

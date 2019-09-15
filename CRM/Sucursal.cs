@@ -10,6 +10,5 @@ namespace CRM
     {
         public string Nombre { get; set; }
         public string Numero { get; set; }
-        public string RFC { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace CRM
         private Red red = new Red();
         private Factura factura = new Factura();
         private List<Producto> productos = new List<Producto>();
-        
+        private List<Sucursal> sucursales = new List<Sucursal>();
         public Form1()
         {
             InitializeComponent();
@@ -31,11 +31,17 @@ namespace CRM
         private void Form1_Load(object sender, EventArgs e)
         {
             LlenarListaProductos();
+            LlenarListaSucursales();
             BindingSource bindingSource = new BindingSource();
             bindingSource.DataSource = productos;
             CBProductos.DataSource = bindingSource;
             CBProductos.DisplayMember = "Nombre";
             CBProductos.ValueMember = "Nombre";
+
+            CBSucursal.DataSource = sucursales;
+            CBSucursal.DisplayMember = "Nombre";
+            CBSucursal.ValueMember = "Nombre";
+            
         }
 
         private void LlenarListaProductos()
@@ -45,7 +51,11 @@ namespace CRM
             productos.Add(new Producto() { Nombre = "CHOCOLATE", Precio = 10, Cantidad = 1 });
             productos.Add(new Producto() { Nombre = "CARGADOR", Precio = 250, Cantidad = 1 });
         }
-
+        private void LlenarListaSucursales()
+        {
+            sucursales.Add(new Sucursal() { Nombre = "SUCURSAL DE LA LUZ", Numero = "13" });
+            sucursales.Add(new Sucursal() { Nombre = "SUCURSAL DEL VALLE", Numero = "22" });
+        }
         private void CrearProducto(string filename,Producto[] productos)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Producto[]));
@@ -69,17 +79,24 @@ namespace CRM
 
         private void BtnAgregar_Click(object sender, EventArgs e)
         {
-            Producto productoSeleccionado = (Producto)CBProductos.SelectedItem;
+            Producto productoSeleccionado = (Producto)CBProductos.SelectedItem;           
             productoSeleccionado.Cantidad = Convert.ToInt32(TBCantidad.Text);
+            productoSeleccionado.CalcularTotal();
             factura.AgregarProducto(productoSeleccionado);
-            MessageBox.Show(factura.productos.Count.ToString());
             DGVProductosFactura.DataSource = factura.productos.ToList();
+            factura.CalcularSubtotal();
+            LblSubtotal.Text = factura.Subtotal.ToString();
+            LblIVA.Text = factura.IVA.ToString();
+            LblTotal.Text = factura.Total.ToString();
+            LblCantidadProductos.Text = factura.Cantidad_Productos.ToString();
         }
 
         private void CBProductos_SelectedIndexChanged(object sender, EventArgs e)
         {
             Producto productoSeleccionado = (Producto)CBProductos.SelectedItem;
             TBCantidad.Text = productoSeleccionado.Cantidad.ToString();
+            LblPrecioUnitario.Text = productoSeleccionado.Precio.ToString();
+
         }
 
         private void BtnSerializar_Click(object sender, EventArgs e)
@@ -90,6 +107,18 @@ namespace CRM
         private void BtnDeserializar_Click(object sender, EventArgs e)
         {
             LeerProductos("‪productos.xml");
+        }
+
+        private void CBSucursal_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void BtnFinalizar_Click(object sender, EventArgs e)
+        {
+            Sucursal sucursal = (Sucursal)CBSucursal.SelectedItem;
+            factura.GenerarFolio(sucursal.Numero);
+            factura.Fecha = DateTime.Today;
         }
     }
 }
