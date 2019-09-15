@@ -28,13 +28,80 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.CBProductos = new System.Windows.Forms.ComboBox();
+            this.BtnAgregar = new System.Windows.Forms.Button();
+            this.TBCantidad = new System.Windows.Forms.TextBox();
+            this.DGVProductosFactura = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.DGVProductosFactura)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // CBProductos
+            // 
+            this.CBProductos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBProductos.FormattingEnabled = true;
+            this.CBProductos.Location = new System.Drawing.Point(37, 129);
+            this.CBProductos.Name = "CBProductos";
+            this.CBProductos.Size = new System.Drawing.Size(155, 29);
+            this.CBProductos.TabIndex = 0;
+            this.CBProductos.SelectedIndexChanged += new System.EventHandler(this.CBProductos_SelectedIndexChanged);
+            // 
+            // BtnAgregar
+            // 
+            this.BtnAgregar.Location = new System.Drawing.Point(312, 128);
+            this.BtnAgregar.Name = "BtnAgregar";
+            this.BtnAgregar.Size = new System.Drawing.Size(86, 29);
+            this.BtnAgregar.TabIndex = 2;
+            this.BtnAgregar.Text = "Agregar";
+            this.BtnAgregar.UseVisualStyleBackColor = true;
+            this.BtnAgregar.Click += new System.EventHandler(this.BtnAgregar_Click);
+            // 
+            // TBCantidad
+            // 
+            this.TBCantidad.Location = new System.Drawing.Point(216, 129);
+            this.TBCantidad.Name = "TBCantidad";
+            this.TBCantidad.Size = new System.Drawing.Size(68, 29);
+            this.TBCantidad.TabIndex = 1;
+            // 
+            // DGVProductosFactura
+            // 
+            this.DGVProductosFactura.AllowUserToAddRows = false;
+            this.DGVProductosFactura.AllowUserToDeleteRows = false;
+            this.DGVProductosFactura.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DGVProductosFactura.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGVProductosFactura.Location = new System.Drawing.Point(109, 227);
+            this.DGVProductosFactura.Name = "DGVProductosFactura";
+            this.DGVProductosFactura.ReadOnly = true;
+            this.DGVProductosFactura.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DGVProductosFactura.Size = new System.Drawing.Size(529, 150);
+            this.DGVProductosFactura.TabIndex = 3;
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(953, 576);
+            this.Controls.Add(this.DGVProductosFactura);
+            this.Controls.Add(this.TBCantidad);
+            this.Controls.Add(this.BtnAgregar);
+            this.Controls.Add(this.CBProductos);
+            this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Name = "Form1";
+            this.Text = "Cliente";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.DGVProductosFactura)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+        private System.Windows.Forms.ComboBox CBProductos;
+        private System.Windows.Forms.Button BtnAgregar;
+        private System.Windows.Forms.TextBox TBCantidad;
+        private System.Windows.Forms.DataGridView DGVProductosFactura;
     }
 }
 
