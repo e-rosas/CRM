@@ -60,7 +60,6 @@
     <Compile Include="Red.cs" />
     <Compile Include="Subject.cs" />
     <Compile Include="Sucursal.cs" />
-    <Compile Include="Venta.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

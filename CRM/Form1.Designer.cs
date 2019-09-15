@@ -32,6 +32,8 @@
             this.BtnAgregar = new System.Windows.Forms.Button();
             this.TBCantidad = new System.Windows.Forms.TextBox();
             this.DGVProductosFactura = new System.Windows.Forms.DataGridView();
+            this.BtnSerializar = new System.Windows.Forms.Button();
+            this.BtnDeserializar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DGVProductosFactura)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,12 +77,34 @@
             this.DGVProductosFactura.Size = new System.Drawing.Size(529, 150);
             this.DGVProductosFactura.TabIndex = 3;
             // 
+            // BtnSerializar
+            // 
+            this.BtnSerializar.Location = new System.Drawing.Point(507, 119);
+            this.BtnSerializar.Name = "BtnSerializar";
+            this.BtnSerializar.Size = new System.Drawing.Size(75, 38);
+            this.BtnSerializar.TabIndex = 4;
+            this.BtnSerializar.Text = "button1";
+            this.BtnSerializar.UseVisualStyleBackColor = true;
+            this.BtnSerializar.Click += new System.EventHandler(this.BtnSerializar_Click);
+            // 
+            // BtnDeserializar
+            // 
+            this.BtnDeserializar.Location = new System.Drawing.Point(663, 119);
+            this.BtnDeserializar.Name = "BtnDeserializar";
+            this.BtnDeserializar.Size = new System.Drawing.Size(75, 38);
+            this.BtnDeserializar.TabIndex = 5;
+            this.BtnDeserializar.Text = "button1";
+            this.BtnDeserializar.UseVisualStyleBackColor = true;
+            this.BtnDeserializar.Click += new System.EventHandler(this.BtnDeserializar_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(953, 576);
+            this.Controls.Add(this.BtnDeserializar);
+            this.Controls.Add(this.BtnSerializar);
             this.Controls.Add(this.DGVProductosFactura);
             this.Controls.Add(this.TBCantidad);
             this.Controls.Add(this.BtnAgregar);
@@ -102,6 +126,8 @@
         private System.Windows.Forms.Button BtnAgregar;
         private System.Windows.Forms.TextBox TBCantidad;
         private System.Windows.Forms.DataGridView DGVProductosFactura;
+        private System.Windows.Forms.Button BtnSerializar;
+        private System.Windows.Forms.Button BtnDeserializar;
     }
 }
 

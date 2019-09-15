@@ -25,7 +25,11 @@ namespace CRM
 
         public void AgregarProducto(Producto producto)
         {
-            productos.Add(producto);
+            if (productos.Add(producto) == false)
+            {
+                productos.Remove(producto);
+                productos.Add(producto);
+            }
         }
     }
 }
