@@ -16,6 +16,7 @@ namespace CRM
         {
             NetworkChange.NetworkAvailabilityChanged += new
             NetworkAvailabilityChangedEventHandler(CambioDisponibilidad);
+            Disponibilidad = HayInternet();
         }
 
         public void NotificarObservadores()
@@ -44,6 +45,18 @@ namespace CRM
             Disponibilidad = e.IsAvailable;
             NotificarObservadores();
                       
+        }
+        private bool HayInternet()
+        {
+            try
+            {
+                System.Net.IPHostEntry host = System.Net.Dns.GetHostEntry("www.google.com");
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
