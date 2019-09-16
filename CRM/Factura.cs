@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace CRM
 {
-    public class Factura
+    public class Factura 
     {
-        public Factura()
-        {
-            productos = new HashSet<Producto>();
-        }
         public string NoFolio { get; set; }
         public string RFC { get; set; }
         public string Correo { get; set; }
@@ -21,15 +17,16 @@ namespace CRM
         public decimal Total { get; set; }
         public int Cantidad_Productos { get; set; }
 
-        public HashSet<Producto> productos;
+        public HashSet<Producto> productos = new HashSet<Producto>();
 
         public void AgregarProducto(Producto producto)
         {
-            if (productos.Add(producto) == false)
-            {
-                productos.Remove(producto);
-                productos.Add(producto);
-            }
+            productos.Add(producto);
+        }
+
+        public void EliminarProducto(Producto producto)
+        {
+            productos.Remove(producto);
         }
 
         public void CalcularSubtotal()
@@ -41,7 +38,7 @@ namespace CRM
                 Subtotal = Subtotal + p.Total;
                 Cantidad_Productos = Cantidad_Productos + p.Cantidad;
             }
-            IVA = Math.Round(Subtotal * (decimal)0.08,2);
+            IVA = Math.Round(Subtotal * (decimal)0.08, 2);
             Total = IVA + Subtotal;
         }
 

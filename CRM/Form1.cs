@@ -14,13 +14,14 @@ namespace CRM
     public partial class Form1 : Form, Observador
     {
         private Red red = new Red();
-        private Factura factura = new Factura();
-        private List<Producto> productos = new List<Producto>();
+        private Factura factura = new Factura();       
+        private List<Producto> productosDisponibles = new List<Producto>();
         private List<Sucursal> sucursales = new List<Sucursal>();
+        private List<Factura> facturasPendientes = new List<Factura>();
         public Form1()
         {
             InitializeComponent();
-            red.RegistrarObservador(this);
+            red.RegistrarObservador(this); //registrando como observador a la forma
         }
 
         public void Actualizar()
@@ -32,49 +33,57 @@ namespace CRM
         {
             LlenarListaProductos();
             LlenarListaSucursales();
+
             BindingSource bindingSource = new BindingSource();
-            bindingSource.DataSource = productos;
+            bindingSource.DataSource = productosDisponibles;
             CBProductos.DataSource = bindingSource;
             CBProductos.DisplayMember = "Nombre";
             CBProductos.ValueMember = "Nombre";
 
             CBSucursal.DataSource = sucursales;
-            CBSucursal.DisplayMember = "Nombre";
-            CBSucursal.ValueMember = "Nombre";
+            CBSucursal.DisplayMember = "Nombre_Sucursal";
+            CBSucursal.ValueMember = "Nombre_Sucursal";
             
         }
 
         private void LlenarListaProductos()
         {
-            productos.Add(new Producto() { Nombre ="PARACETAMOL", Precio = 25,Cantidad = 1 });
-            productos.Add(new Producto() { Nombre = "REFRESCO", Precio = 15, Cantidad = 1 });
-            productos.Add(new Producto() { Nombre = "CHOCOLATE", Precio = 10, Cantidad = 1 });
-            productos.Add(new Producto() { Nombre = "CARGADOR", Precio = 250, Cantidad = 1 });
+            Producto p1 = new Producto();
+            p1.Nombre = "Gatos";
+            p1.Precio = 15;
+            p1.Cantidad = 7;
+            productosDisponibles.Add(p1);
+            productosDisponibles.Add(new Producto() { Nombre ="PARACETAMOL", Precio = 25, Cantidad = 1 });
+            productosDisponibles.Add(new Producto() { Nombre = "REFRESCO", Precio = 15, Cantidad = 1 });
+            productosDisponibles.Add(new Producto() { Nombre = "CHOCOLATE", Precio = 10, Cantidad = 1 });
+            productosDisponibles.Add(new Producto() { Nombre = "CARGADOR", Precio = 250, Cantidad = 1 });
         }
         private void LlenarListaSucursales()
         {
-            sucursales.Add(new Sucursal() { Nombre = "SUCURSAL DE LA LUZ", Numero = "13" });
-            sucursales.Add(new Sucursal() { Nombre = "SUCURSAL DEL VALLE", Numero = "22" });
+            sucursales.Add(new Sucursal() { Nombre_Sucursal = "SUCURSAL DE LA LUZ", Numero = "13",RFC="SEMK961223"});
+            sucursales.Add(new Sucursal() { Nombre_Sucursal = "SUCURSAL DEL VALLE", Numero = "22",RFC="ROSE970717"});
         }
-        private void CrearProducto(string filename,Producto[] productos)
+
+        private void GuardarFactura(string archivo, Factura[] facturas)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(Producto[]));
-            TextWriter writer = new StreamWriter(filename);
-            serializer.Serialize(writer, productos);
+            XmlSerializer serializer = new XmlSerializer(typeof(Factura[]));
+            TextWriter writer = new StreamWriter(archivo);
+            serializer.Serialize(writer, facturas);
             writer.Close();
         }
 
-        private void LeerProductos(string filename)
+        private void LeerFacturas(string archivo)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(Producto[]));
-            using (FileStream fs = new FileStream(filename, FileMode.Open))
+            XmlSerializer serializer = new XmlSerializer(typeof(Factura[]));
+            Factura[] facturasLeidas;
+            using (FileStream fs = new FileStream(archivo, FileMode.Open))
             {
-                Producto[] productosLeidos = (Producto[])serializer.Deserialize(fs);
-                productos = productosLeidos.ToList<Producto>();
+                facturasLeidas = (Factura[])serializer.Deserialize(fs);
             }
-                
-            
-            DGVProductosFactura.DataSource = productos;
+            foreach(Factura factura in facturasLeidas)
+            {
+                MessageBox.Show(factura.NoFolio);
+            }
         }
 
         private void BtnAgregar_Click(object sender, EventArgs e)
@@ -82,9 +91,12 @@ namespace CRM
             Producto productoSeleccionado = (Producto)CBProductos.SelectedItem;           
             productoSeleccionado.Cantidad = Convert.ToInt32(TBCantidad.Text);
             productoSeleccionado.CalcularTotal();
+
+            //agregar el producto a la lista de productos de factura
             factura.AgregarProducto(productoSeleccionado);
-            DGVProductosFactura.DataSource = factura.productos.ToList();
-            factura.CalcularSubtotal();
+            DGVProductosFactura.DataSource = factura.productos.ToList(); //vincula la lista de productos de la factura con el datagridview
+            factura.CalcularSubtotal(); //calcula todo
+            //Actualizar labels 
             LblSubtotal.Text = factura.Subtotal.ToString();
             LblIVA.Text = factura.IVA.ToString();
             LblTotal.Text = factura.Total.ToString();
@@ -99,15 +111,6 @@ namespace CRM
 
         }
 
-        private void BtnSerializar_Click(object sender, EventArgs e)
-        {
-            CrearProducto("‪productos.xml", productos.ToArray());
-        }
-
-        private void BtnDeserializar_Click(object sender, EventArgs e)
-        {
-            LeerProductos("‪productos.xml");
-        }
 
         private void CBSucursal_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -116,9 +119,28 @@ namespace CRM
 
         private void BtnFinalizar_Click(object sender, EventArgs e)
         {
-            Sucursal sucursal = (Sucursal)CBSucursal.SelectedItem;
-            factura.GenerarFolio(sucursal.Numero);
+            Sucursal sucursalSeleccionada = (Sucursal)CBSucursal.SelectedItem;
+            factura.GenerarFolio(sucursalSeleccionada.Numero);
             factura.Fecha = DateTime.Today;
+            factura.RFC = sucursalSeleccionada.RFC;
+            factura.Correo = TBCantidad.Text;
+            facturasPendientes.Add(factura);
+            factura = new Factura(); //limpiando los campos
+            DGVProductosFactura.DataSource = factura.productos.ToList();
+            LblSubtotal.Text = "";
+            LblIVA.Text = "";
+            LblTotal.Text = "";
+            LblCantidadProductos.Text = "";
+        }
+
+        private void BtnGuardarF_Click(object sender, EventArgs e)
+        {
+            GuardarFactura("facturas.xml", facturasPendientes.ToArray());
+        }
+
+        private void BtnLeerF_Click(object sender, EventArgs e)
+        {
+            LeerFacturas("facturas.xml");
         }
     }
 }

@@ -8,7 +8,8 @@ namespace CRM
 {
     public class Sucursal
     {
-        public string Nombre { get; set; }
+        public string Nombre_Sucursal { get; set; }
         public string Numero { get; set; }
+        public string RFC { get; set; }
     }
 }

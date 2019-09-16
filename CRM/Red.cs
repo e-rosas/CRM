@@ -10,13 +10,12 @@ namespace CRM
 {
     public class Red : Subject
     {
-        private List<Observador> observadores;
+        private List<Observador> observadores = new List<Observador>();
         public bool Disponibilidad;
         public Red()
         {
             NetworkChange.NetworkAvailabilityChanged += new
-            NetworkAvailabilityChangedEventHandler(AddressChangedCallback);
-            observadores = new List<Observador>();
+            NetworkAvailabilityChangedEventHandler(CambioDisponibilidad);
         }
 
         public void NotificarObservadores()
@@ -40,7 +39,7 @@ namespace CRM
             }
         }
 
-        private void AddressChangedCallback(object sender, NetworkAvailabilityEventArgs e)
+        private void CambioDisponibilidad(object sender, NetworkAvailabilityEventArgs e)
         {
             Disponibilidad = e.IsAvailable;
             NotificarObservadores();
