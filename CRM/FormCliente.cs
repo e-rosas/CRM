@@ -107,19 +107,6 @@ namespace CRM
             LblPrecioUnitario.Text = productoSeleccionado.Precio.ToString();
 
         }
-
-        private void EnviarFactura()
-        {
-            try
-            {
-                transaccion.EnvioTransaccion(facturaActual);
-            }
-            catch
-            {
-                MessageBox.Show("Error de conexion al servidor!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
         private void BtnFinalizar_Click(object sender, EventArgs e)
         {
             Sucursal sucursalSeleccionada = (Sucursal)CBSucursal.SelectedItem;

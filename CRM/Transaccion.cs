@@ -20,7 +20,7 @@ namespace CRM
         public Transaccion(Subject subject) {
             red = subject;
             red.RegistrarObservador(this);
-            conexion.conexionString = "Data Source=ELLIPSIS; Initial Catalog=Transacciones; User id=AdminTransaccion; Password=root";
+            conexion.conexionString = "Data Source=192.168.1.81; Initial Catalog=Transacciones; User id=AdminTransaccion; Password=root";
         }
       
         public void Actualizar(bool disponiblidad)

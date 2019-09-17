@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.CBProductos = new System.Windows.Forms.ComboBox();
             this.BtnAgregar = new System.Windows.Forms.Button();
             this.TBCantidad = new System.Windows.Forms.TextBox();
@@ -51,14 +51,26 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.TBDireccion = new System.Windows.Forms.TextBox();
+            this.LBDireccion = new System.Windows.Forms.Label();
+            this.BTAceptar = new System.Windows.Forms.Button();
+            this.PConfiguracion = new System.Windows.Forms.Panel();
+            this.LBConfiguracion = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DGVProductosFactura)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.PConfiguracion.SuspendLayout();
             this.SuspendLayout();
             // 
             // CBProductos
             // 
             this.CBProductos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBProductos.FormattingEnabled = true;
-            this.CBProductos.Location = new System.Drawing.Point(34, 134);
+            this.CBProductos.Location = new System.Drawing.Point(10, 85);
             this.CBProductos.Name = "CBProductos";
             this.CBProductos.Size = new System.Drawing.Size(155, 29);
             this.CBProductos.TabIndex = 0;
@@ -66,7 +78,7 @@
             // 
             // BtnAgregar
             // 
-            this.BtnAgregar.Location = new System.Drawing.Point(650, 136);
+            this.BtnAgregar.Location = new System.Drawing.Point(626, 87);
             this.BtnAgregar.Name = "BtnAgregar";
             this.BtnAgregar.Size = new System.Drawing.Size(86, 29);
             this.BtnAgregar.TabIndex = 2;
@@ -76,7 +88,7 @@
             // 
             // TBCantidad
             // 
-            this.TBCantidad.Location = new System.Drawing.Point(486, 136);
+            this.TBCantidad.Location = new System.Drawing.Point(462, 87);
             this.TBCantidad.MaxLength = 6;
             this.TBCantidad.Name = "TBCantidad";
             this.TBCantidad.Size = new System.Drawing.Size(129, 29);
@@ -89,17 +101,17 @@
             this.DGVProductosFactura.AllowUserToDeleteRows = false;
             this.DGVProductosFactura.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DGVProductosFactura.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.SandyBrown;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVProductosFactura.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.SandyBrown;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVProductosFactura.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DGVProductosFactura.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVProductosFactura.EnableHeadersVisualStyles = false;
-            this.DGVProductosFactura.Location = new System.Drawing.Point(34, 199);
+            this.DGVProductosFactura.Location = new System.Drawing.Point(10, 147);
             this.DGVProductosFactura.Name = "DGVProductosFactura";
             this.DGVProductosFactura.ReadOnly = true;
             this.DGVProductosFactura.RowHeadersVisible = false;
@@ -111,7 +123,7 @@
             // 
             this.CBSucursal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBSucursal.FormattingEnabled = true;
-            this.CBSucursal.Location = new System.Drawing.Point(125, 68);
+            this.CBSucursal.Location = new System.Drawing.Point(101, 29);
             this.CBSucursal.Name = "CBSucursal";
             this.CBSucursal.Size = new System.Drawing.Size(611, 29);
             this.CBSucursal.TabIndex = 6;
@@ -119,7 +131,7 @@
             // LblPrecioUnitario
             // 
             this.LblPrecioUnitario.AutoSize = true;
-            this.LblPrecioUnitario.Location = new System.Drawing.Point(330, 139);
+            this.LblPrecioUnitario.Location = new System.Drawing.Point(306, 90);
             this.LblPrecioUnitario.Name = "LblPrecioUnitario";
             this.LblPrecioUnitario.Size = new System.Drawing.Size(30, 21);
             this.LblPrecioUnitario.TabIndex = 7;
@@ -128,7 +140,7 @@
             // LblTotal
             // 
             this.LblTotal.AutoSize = true;
-            this.LblTotal.Location = new System.Drawing.Point(880, 359);
+            this.LblTotal.Location = new System.Drawing.Point(845, 288);
             this.LblTotal.Name = "LblTotal";
             this.LblTotal.Size = new System.Drawing.Size(19, 21);
             this.LblTotal.TabIndex = 8;
@@ -137,7 +149,7 @@
             // LblSubtotal
             // 
             this.LblSubtotal.AutoSize = true;
-            this.LblSubtotal.Location = new System.Drawing.Point(880, 278);
+            this.LblSubtotal.Location = new System.Drawing.Point(845, 207);
             this.LblSubtotal.Name = "LblSubtotal";
             this.LblSubtotal.Size = new System.Drawing.Size(19, 21);
             this.LblSubtotal.TabIndex = 9;
@@ -146,7 +158,7 @@
             // LblIVA
             // 
             this.LblIVA.AutoSize = true;
-            this.LblIVA.Location = new System.Drawing.Point(880, 318);
+            this.LblIVA.Location = new System.Drawing.Point(845, 247);
             this.LblIVA.Name = "LblIVA";
             this.LblIVA.Size = new System.Drawing.Size(19, 21);
             this.LblIVA.TabIndex = 10;
@@ -155,7 +167,7 @@
             // LblCantidadProductos
             // 
             this.LblCantidadProductos.AutoSize = true;
-            this.LblCantidadProductos.Location = new System.Drawing.Point(880, 234);
+            this.LblCantidadProductos.Location = new System.Drawing.Point(845, 163);
             this.LblCantidadProductos.Name = "LblCantidadProductos";
             this.LblCantidadProductos.Size = new System.Drawing.Size(19, 21);
             this.LblCantidadProductos.TabIndex = 11;
@@ -164,7 +176,7 @@
             // BtnFinalizar
             // 
             this.BtnFinalizar.Enabled = false;
-            this.BtnFinalizar.Location = new System.Drawing.Point(806, 460);
+            this.BtnFinalizar.Location = new System.Drawing.Point(771, 389);
             this.BtnFinalizar.Name = "BtnFinalizar";
             this.BtnFinalizar.Size = new System.Drawing.Size(86, 38);
             this.BtnFinalizar.TabIndex = 12;
@@ -174,7 +186,7 @@
             // 
             // TBCorreo
             // 
-            this.TBCorreo.Location = new System.Drawing.Point(190, 466);
+            this.TBCorreo.Location = new System.Drawing.Point(166, 398);
             this.TBCorreo.MaxLength = 40;
             this.TBCorreo.Name = "TBCorreo";
             this.TBCorreo.Size = new System.Drawing.Size(546, 29);
@@ -183,7 +195,7 @@
             // LBSucursal
             // 
             this.LBSucursal.AutoSize = true;
-            this.LBSucursal.Location = new System.Drawing.Point(30, 71);
+            this.LBSucursal.Location = new System.Drawing.Point(6, 32);
             this.LBSucursal.Name = "LBSucursal";
             this.LBSucursal.Size = new System.Drawing.Size(88, 21);
             this.LBSucursal.TabIndex = 15;
@@ -192,7 +204,7 @@
             // LBPrecio
             // 
             this.LBPrecio.AutoSize = true;
-            this.LBPrecio.Location = new System.Drawing.Point(254, 138);
+            this.LBPrecio.Location = new System.Drawing.Point(230, 89);
             this.LBPrecio.Name = "LBPrecio";
             this.LBPrecio.Size = new System.Drawing.Size(70, 21);
             this.LBPrecio.TabIndex = 16;
@@ -201,7 +213,7 @@
             // LBCantidad
             // 
             this.LBCantidad.AutoSize = true;
-            this.LBCantidad.Location = new System.Drawing.Point(391, 139);
+            this.LBCantidad.Location = new System.Drawing.Point(367, 90);
             this.LBCantidad.Name = "LBCantidad";
             this.LBCantidad.Size = new System.Drawing.Size(89, 21);
             this.LBCantidad.TabIndex = 17;
@@ -218,7 +230,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(758, 278);
+            this.label2.Location = new System.Drawing.Point(723, 207);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(116, 21);
             this.label2.TabIndex = 19;
@@ -227,7 +239,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(838, 318);
+            this.label3.Location = new System.Drawing.Point(803, 247);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(36, 21);
             this.label3.TabIndex = 20;
@@ -236,7 +248,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(802, 234);
+            this.label4.Location = new System.Drawing.Point(767, 163);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(72, 21);
             this.label4.TabIndex = 21;
@@ -245,7 +257,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(761, 359);
+            this.label5.Location = new System.Drawing.Point(726, 288);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(112, 21);
             this.label5.TabIndex = 22;
@@ -254,7 +266,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(30, 474);
+            this.label6.Location = new System.Drawing.Point(6, 406);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(141, 21);
             this.label6.TabIndex = 23;
@@ -269,43 +281,128 @@
             this.label7.TabIndex = 24;
             this.label7.Text = "PUNTO DE VENTA";
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(12, 35);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(953, 474);
+            this.tabControl1.TabIndex = 25;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.LBSucursal);
+            this.tabPage1.Controls.Add(this.CBSucursal);
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.label6);
+            this.tabPage1.Controls.Add(this.label4);
+            this.tabPage1.Controls.Add(this.BtnAgregar);
+            this.tabPage1.Controls.Add(this.label3);
+            this.tabPage1.Controls.Add(this.CBProductos);
+            this.tabPage1.Controls.Add(this.label2);
+            this.tabPage1.Controls.Add(this.TBCantidad);
+            this.tabPage1.Controls.Add(this.LblPrecioUnitario);
+            this.tabPage1.Controls.Add(this.BtnFinalizar);
+            this.tabPage1.Controls.Add(this.LblCantidadProductos);
+            this.tabPage1.Controls.Add(this.LBPrecio);
+            this.tabPage1.Controls.Add(this.LblIVA);
+            this.tabPage1.Controls.Add(this.LBCantidad);
+            this.tabPage1.Controls.Add(this.LblSubtotal);
+            this.tabPage1.Controls.Add(this.TBCorreo);
+            this.tabPage1.Controls.Add(this.LblTotal);
+            this.tabPage1.Controls.Add(this.DGVProductosFactura);
+            this.tabPage1.Location = new System.Drawing.Point(4, 30);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(945, 440);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "VENTAS";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.LBConfiguracion);
+            this.tabPage2.Controls.Add(this.PConfiguracion);
+            this.tabPage2.Location = new System.Drawing.Point(4, 30);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(945, 440);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "CONFIGURACION";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // TBDireccion
+            // 
+            this.TBDireccion.Location = new System.Drawing.Point(137, 28);
+            this.TBDireccion.Name = "TBDireccion";
+            this.TBDireccion.Size = new System.Drawing.Size(191, 29);
+            this.TBDireccion.TabIndex = 0;
+            // 
+            // LBDireccion
+            // 
+            this.LBDireccion.AutoSize = true;
+            this.LBDireccion.Location = new System.Drawing.Point(16, 31);
+            this.LBDireccion.Name = "LBDireccion";
+            this.LBDireccion.Size = new System.Drawing.Size(115, 21);
+            this.LBDireccion.TabIndex = 1;
+            this.LBDireccion.Text = "DIRECCION IP :";
+            // 
+            // BTAceptar
+            // 
+            this.BTAceptar.Location = new System.Drawing.Point(368, 22);
+            this.BTAceptar.Name = "BTAceptar";
+            this.BTAceptar.Size = new System.Drawing.Size(87, 38);
+            this.BTAceptar.TabIndex = 2;
+            this.BTAceptar.Text = "ACEPTAR";
+            this.BTAceptar.UseVisualStyleBackColor = true;
+            // 
+            // PConfiguracion
+            // 
+            this.PConfiguracion.BackColor = System.Drawing.Color.LightYellow;
+            this.PConfiguracion.Controls.Add(this.LBDireccion);
+            this.PConfiguracion.Controls.Add(this.BTAceptar);
+            this.PConfiguracion.Controls.Add(this.TBDireccion);
+            this.PConfiguracion.Location = new System.Drawing.Point(223, 55);
+            this.PConfiguracion.Name = "PConfiguracion";
+            this.PConfiguracion.Size = new System.Drawing.Size(497, 100);
+            this.PConfiguracion.TabIndex = 3;
+            // 
+            // LBConfiguracion
+            // 
+            this.LBConfiguracion.AutoSize = true;
+            this.LBConfiguracion.Location = new System.Drawing.Point(398, 14);
+            this.LBConfiguracion.Name = "LBConfiguracion";
+            this.LBConfiguracion.Size = new System.Drawing.Size(136, 21);
+            this.LBConfiguracion.TabIndex = 4;
+            this.LBConfiguracion.Text = "CONFIGURACION";
+            // 
             // FormCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(922, 539);
+            this.ClientSize = new System.Drawing.Size(977, 539);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.LBCantidad);
-            this.Controls.Add(this.LBPrecio);
-            this.Controls.Add(this.LBSucursal);
-            this.Controls.Add(this.TBCorreo);
-            this.Controls.Add(this.BtnFinalizar);
-            this.Controls.Add(this.LblCantidadProductos);
-            this.Controls.Add(this.LblIVA);
-            this.Controls.Add(this.LblSubtotal);
-            this.Controls.Add(this.LblTotal);
-            this.Controls.Add(this.LblPrecioUnitario);
-            this.Controls.Add(this.CBSucursal);
-            this.Controls.Add(this.DGVProductosFactura);
-            this.Controls.Add(this.TBCantidad);
-            this.Controls.Add(this.BtnAgregar);
-            this.Controls.Add(this.CBProductos);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(938, 578);
-            this.MinimumSize = new System.Drawing.Size(938, 578);
+            this.MaximumSize = new System.Drawing.Size(993, 578);
+            this.MinimumSize = new System.Drawing.Size(993, 578);
             this.Name = "FormCliente";
             this.Text = "Administrador de ventas";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGVProductosFactura)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            this.PConfiguracion.ResumeLayout(false);
+            this.PConfiguracion.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -335,6 +432,14 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Label LBConfiguracion;
+        private System.Windows.Forms.Panel PConfiguracion;
+        private System.Windows.Forms.Label LBDireccion;
+        private System.Windows.Forms.Button BTAceptar;
+        private System.Windows.Forms.TextBox TBDireccion;
     }
 }
 
