@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.CBProductos = new System.Windows.Forms.ComboBox();
             this.BtnAgregar = new System.Windows.Forms.Button();
             this.TBCantidad = new System.Windows.Forms.TextBox();
@@ -89,14 +89,14 @@
             this.DGVProductosFactura.AllowUserToDeleteRows = false;
             this.DGVProductosFactura.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DGVProductosFactura.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.SandyBrown;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVProductosFactura.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.SandyBrown;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVProductosFactura.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.DGVProductosFactura.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVProductosFactura.EnableHeadersVisualStyles = false;
             this.DGVProductosFactura.Location = new System.Drawing.Point(34, 199);
@@ -106,7 +106,6 @@
             this.DGVProductosFactura.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGVProductosFactura.Size = new System.Drawing.Size(702, 236);
             this.DGVProductosFactura.TabIndex = 3;
-            this.DGVProductosFactura.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGVProductosFactura_CellContentClick);
             // 
             // CBSucursal
             // 
@@ -116,7 +115,6 @@
             this.CBSucursal.Name = "CBSucursal";
             this.CBSucursal.Size = new System.Drawing.Size(611, 29);
             this.CBSucursal.TabIndex = 6;
-            this.CBSucursal.SelectedIndexChanged += new System.EventHandler(this.CBSucursal_SelectedIndexChanged);
             // 
             // LblPrecioUnitario
             // 

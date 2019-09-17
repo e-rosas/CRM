@@ -70,6 +70,7 @@
     <Compile Include="Red.cs" />
     <Compile Include="Subject.cs" />
     <Compile Include="Sucursal.cs" />
+    <Compile Include="Transaccion.cs" />
     <EmbeddedResource Include="FormCliente.resx">
       <DependentUpon>FormCliente.cs</DependentUpon>
     </EmbeddedResource>

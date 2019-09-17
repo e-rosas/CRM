@@ -7,56 +7,33 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
-using iTextSharp.text.pdf;
-using iTextSharp.text;
-using System.Net;
-using System.Net.Mail;
+
 
 //I <3 TS
 
 namespace CRM
 {
-    public partial class FormCliente : Form, Observador
+    public partial class FormCliente : Form
     {
-        private Conexion Conexion = new Conexion();
         private Red red = new Red(); //al crearse se prueba la disponibilidad de la red
-        private Factura factura = new Factura();       
+        private Factura facturaActual = new Factura();       
         private List<Producto> productosDisponibles = new List<Producto>();
         private List<Sucursal> sucursales = new List<Sucursal>();
         private List<Factura> facturasPendientes = new List<Factura>();
-        private bool DisponibilidadRed;
+        private Transaccion transaccion;
         public FormCliente()
         {
             InitializeComponent();
-            red.RegistrarObservador(this); //registrando como observador a la forma
-        }
-
-        public void Actualizar()
-        {
-            MessageBox.Show("Cambio disponibilidad"+red.Disponibilidad.ToString());
-            DisponibilidadRed = red.Disponibilidad;
-        }
-
-        private void LogicaRed()
-        {
-            if (DisponibilidadRed && File.Exists("facturas.xml"))
-            {
-                //si hay conexion y el archivo existe,  Leer documento facturas.xml, si hay facturas pendientes , enviarlas
-                LeerFacturas("facturas.xml");
-                //limpiar archivo
-                File.Delete("facturas.xml");
-                MessageBox.Show("Archivo eliminado");
-            }
+            transaccion = new Transaccion(red);
+            transaccion.DisponibilidadRed = red.Disponibilidad; //asignar la disponibilad a la transaccion
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Conexion.conexionString = "Data Source=ELLIPSIS; Initial Catalog=Transacciones; User id=AdminTransaccion; Password=root";
-            DisponibilidadRed = red.Disponibilidad;
-            LogicaRed();
+            RevisarFacturasPendientes();
             LlenarListaProductos();
             LlenarListaSucursales();
-            DGVProductosFactura.DataSource = factura.productos.ToList();
+            DGVProductosFactura.DataSource = facturaActual.productos.ToList();
 
             BindingSource bindingSource = new BindingSource();
             bindingSource.DataSource = productosDisponibles;
@@ -95,40 +72,7 @@ namespace CRM
             TextWriter writer = new StreamWriter(archivo);
             serializer.Serialize(writer, facturas);
             writer.Close();
-        }
-
-        //Procesa la informacion del XML y los guarda en arreglo de facturasleidas
-        private void LeerFacturas(string archivo)
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(Factura[]));
-            Factura[] facturasLeidas;
-            using (FileStream fs = new FileStream(archivo, FileMode.Open)) //liberar el archivo 
-            {
-                facturasLeidas = (Factura[])serializer.Deserialize(fs);
-            }
-            if(facturasLeidas.Length > 0)
-            {
-
-                foreach (Factura factura in facturasLeidas)
-                {
-                    EnvioTransaccion();
-                    NuevoPDF(factura); //generacion de PDF  y enviar por correo
-                }
-            }
-            
-        }
-
-        private void EnvioTransaccion() {
-            Conexion.NuevaTransaccion(factura); //al servidor
-            try
-            {
-                
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Error de conexion al servidor!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        }       
 
         private void BtnAgregar_Click(object sender, EventArgs e)
         {
@@ -144,14 +88,14 @@ namespace CRM
                 productoSeleccionado.CalcularTotal();
 
                 //agregar el producto a la lista de productos de factura
-                factura.AgregarProducto(productoSeleccionado);
-                DGVProductosFactura.DataSource = factura.productos.ToList(); //vincula la lista de productos de la factura con el datagridview
-                factura.CalcularSubtotal(); //calcula todo
+                facturaActual.AgregarProducto(productoSeleccionado);
+                DGVProductosFactura.DataSource = facturaActual.productos.ToList(); //vincula la lista de productos de la factura con el datagridview
+                facturaActual.CalcularSubtotal(); //calcula todo
                                             //Actualizar labels 
-                LblSubtotal.Text = factura.Subtotal.ToString();
-                LblIVA.Text = factura.IVA.ToString();
-                LblTotal.Text = factura.Total.ToString();
-                LblCantidadProductos.Text = factura.Cantidad_Productos.ToString();
+                LblSubtotal.Text = facturaActual.Subtotal.ToString();
+                LblIVA.Text = facturaActual.IVA.ToString();
+                LblTotal.Text = facturaActual.Total.ToString();
+                LblCantidadProductos.Text = facturaActual.Cantidad_Productos.ToString();
                 BtnFinalizar.Enabled = true;
             }           
         }
@@ -164,36 +108,43 @@ namespace CRM
 
         }
 
-
-        private void CBSucursal_SelectedIndexChanged(object sender, EventArgs e)
+        private void EnviarFactura()
         {
-            
+            try
+            {
+                transaccion.EnvioTransaccion(facturaActual);
+            }
+            catch
+            {
+                MessageBox.Show("Error de conexion al servidor!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void BtnFinalizar_Click(object sender, EventArgs e)
         {
             Sucursal sucursalSeleccionada = (Sucursal)CBSucursal.SelectedItem;
-            factura.GenerarFolio(sucursalSeleccionada.Numero);
-            factura.Fecha = DateTime.Today;
-            factura.RFC = sucursalSeleccionada.RFC;
-            if (TBCorreo.Text != "" && ValidarCorreo(TBCorreo.Text))
+            facturaActual.GenerarFolio(sucursalSeleccionada.Numero);
+            facturaActual.Fecha = DateTime.Now;
+            facturaActual.RFC = sucursalSeleccionada.RFC;
+            if (TBCorreo.Text != "" && transaccion.ValidarCorreo(TBCorreo.Text))
             {
-                factura.Correo = TBCorreo.Text;
-                if (DisponibilidadRed)
+                facturaActual.Correo = TBCorreo.Text;
+                if (transaccion.DisponibilidadRed) //envia por correo y al servidor
                 {
-                    EnvioTransaccion();
-                    NuevoPDF(factura); //generacion de PDF y envio de correo
+                    transaccion.EnvioTransaccion(facturaActual);
+                    transaccion.NuevoPDF(facturaActual); //generacion de PDF y envio de correo
                     MessageBox.Show("Venta exitosa y fue enviada!", "Notificacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                  
                 }
-                else
+                else //agrega al archivo de facturas
                 {
-                    facturasPendientes.Add(factura);
-                    GuardarFactura("facturas.xml", facturasPendientes.ToArray());
+                    facturasPendientes.Add(facturaActual);
+                    GuardarFactura(transaccion.UbicacionFacturas(), facturasPendientes.ToArray());
                     MessageBox.Show("Venta pendiente debido a la disponibilidad de red", "Venta pendiente", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
 
-                factura = new Factura(); //limpiando los campos
-                DGVProductosFactura.DataSource = factura.productos.ToList();
+                facturaActual = new Factura(); //limpiando los campos
+                DGVProductosFactura.DataSource = facturaActual.productos.ToList();
                 LblSubtotal.Text = "";
                 LblIVA.Text = "";
                 LblTotal.Text = "";
@@ -209,71 +160,15 @@ namespace CRM
             
         }
 
-        private void NuevoPDF(Factura factura)
-        {
-           Document pdfDoc = new Document(PageSize.A2, 10f, 10f, 10f, 0f);
-           MemoryStream ubicacionEnMemoria = new MemoryStream();
-           PdfWriter writer = PdfWriter.GetInstance(pdfDoc, ubicacionEnMemoria);
-           pdfDoc.Open();
-           pdfDoc.Add(new Paragraph("Numero de folio: "+  factura.NoFolio + "           " + factura.Fecha.ToShortDateString()));
-           pdfDoc.Add(new Paragraph("RFC: " + factura.RFC));
-           foreach (Producto producto in factura.productos)
-            {
-                pdfDoc.Add(new Paragraph(
-                      "Producto: "+producto.Nombre 
-                    + " Precio unitario: "+producto.Precio
-                    + " Cantidad : "+producto.Cantidad
-                    + " Total: "+producto.Total));
-            }
-           pdfDoc.Add(new Paragraph("Subtotal: " + factura.Subtotal+ " IVA: "+factura.IVA+ " Total :"+factura.Total+" Cantidad productos: "+factura.Cantidad_Productos));
-           writer.CloseStream = false;
-           pdfDoc.Close();
-           ubicacionEnMemoria.Position = 0;
-           EnviarCorreo(factura, ubicacionEnMemoria);
-        }
-        private bool ValidarCorreo(string correo)
+        private void RevisarFacturasPendientes()
         {
             try
             {
-                MailAddress m = new MailAddress(correo);
-
-                return true;
+                transaccion.CambioDisponibilidad();
             }
-            catch (FormatException)
+            catch (Exception)
             {
-                return false;
-            }
-        }
-
-        private void EnviarCorreo(Factura factura, MemoryStream ubicacionEnMemoria)
-        {
-            if (ValidarCorreo(factura.Correo))
-            {
-                MailMessage message = new MailMessage();
-                message.From = new MailAddress("practicapatos@gmail.com");
-                message.To.Add(factura.Correo);
-                message.Subject = "Este es un PDF C: ..";
-                message.Body = "Contenido del PDF ";
-                //Agrega al correo un archivo PDF para enviar.4
-                message.Attachments.Add(new Attachment(ubicacionEnMemoria, "Factura.pdf"));
-                SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
-                {
-                    Credentials = new NetworkCredential("practicapatos@gmail.com", "Contra123"),
-                    EnableSsl = true
-                };
-                try
-                {
-                    client.Send(message);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Error de envio!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-            }
-            else
-            {
-                MessageBox.Show("Direccion de correo no es valida.");
+                MessageBox.Show("Error de conexion al servidor!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -283,11 +178,6 @@ namespace CRM
             {
                 e.Handled = true;
             }
-        }
-
-        private void DGVProductosFactura_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
     }
 }

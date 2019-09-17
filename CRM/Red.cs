@@ -23,7 +23,7 @@ namespace CRM
         {
             foreach(Observador o in observadores)
             {
-                o.Actualizar();
+                o.Actualizar(Disponibilidad);
             }
         }
 

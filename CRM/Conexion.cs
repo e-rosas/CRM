@@ -31,9 +31,9 @@ namespace CRM
                     comando.Parameters.Add(new SqlParameter("@IVA", factura.IVA));
                     comando.Parameters.Add(new SqlParameter("@Total", factura.Total));
                     comando.Parameters.Add(new SqlParameter("@Cantidad_Producto", factura.Cantidad_Productos));
-                    comando.ExecuteNonQuery();
-                    conexion.Close();
+                    comando.ExecuteNonQuery();                   
                 }
+                conexion.Close();
             }                      
         }
 
