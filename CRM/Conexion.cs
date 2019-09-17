@@ -9,6 +9,7 @@ namespace CRM
 {
     public class Conexion
     {
+        //Variable que puede tomar diferentes valores de conexion
         public string conexionString;
         SqlConnection conexion;
 

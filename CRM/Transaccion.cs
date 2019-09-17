@@ -20,13 +20,19 @@ namespace CRM
         public Transaccion(Subject subject) {
             red = subject;
             red.RegistrarObservador(this);
-            conexion.conexionString = "Data Source=192.168.1.81; Initial Catalog=Transacciones; User id=AdminTransaccion; Password=root";
+            CambiarStringConexion();
         }
       
         public void Actualizar(bool disponiblidad)
         {
             DisponibilidadRed = disponiblidad;
             CambioDisponibilidad();
+        }
+
+        //Asigna a la variable conexionString el valores de conexion
+        public void CambiarStringConexion()
+        {
+            conexion.conexionString = "Data Source=" + Properties.Settings.Default.Servidor + "; Initial Catalog=Transacciones; User id=AdminTransaccion; Password=root";
         }
         public bool EnvioTransaccion(Factura factura)
         {

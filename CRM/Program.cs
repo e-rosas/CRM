@@ -16,7 +16,16 @@ namespace CRM
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormCliente());
+            if (Properties.Settings.Default.Servidor == "NOCONFIGURADO")
+            {
+                //primera vez que se ejecuta el programa
+                Application.Run(new FormConfiguracion());
+            }
+            else
+            {
+                Application.Run(new FormCliente());
+            }
+            
         }
     }
 }

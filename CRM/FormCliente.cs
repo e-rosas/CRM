@@ -30,14 +30,13 @@ namespace CRM
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            TBDireccion.Text = Properties.Settings.Default.Servidor;
             RevisarFacturasPendientes();
             LlenarListaProductos();
             LlenarListaSucursales();
             DGVProductosFactura.DataSource = facturaActual.productos.ToList();
 
-            BindingSource bindingSource = new BindingSource();
-            bindingSource.DataSource = productosDisponibles;
-            CBProductos.DataSource = bindingSource;
+            CBProductos.DataSource = productosDisponibles;
             CBProductos.DisplayMember = "Nombre";
             CBProductos.ValueMember = "Nombre";
 
@@ -137,8 +136,6 @@ namespace CRM
                 LblTotal.Text = "";
                 LblCantidadProductos.Text = "";
                 TBCorreo.Text = "";
-                productosDisponibles.Clear();
-                LlenarListaProductos();
             }
             else
             {
@@ -165,6 +162,14 @@ namespace CRM
             {
                 e.Handled = true;
             }
+        }
+
+        private void BTAceptar_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Servidor = TBDireccion.Text;
+            Properties.Settings.Default.Save();
+            transaccion.CambiarStringConexion();
+            MessageBox.Show("Configuracion exitosa!", "Configuracion", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

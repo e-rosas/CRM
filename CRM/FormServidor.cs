@@ -16,7 +16,7 @@ namespace CRM
         public FormServidor()
         {
             InitializeComponent();
-            conexion.conexionString = "Data Source=ELLIPSIS; Initial Catalog=Transacciones; User id=AdminTransaccion; Password=root";
+            conexion.conexionString = "Data Source="+Properties.Settings.Default.Servidor+"; Initial Catalog=Transacciones; User id=AdminTransaccion; Password=root";
         }
 
         private void FormServidor_Load(object sender, EventArgs e)
@@ -33,6 +33,14 @@ namespace CRM
         {
             DGVTransacciones.DataSource = conexion.VerTransacciones("%" + "" + "%");
             
+        }
+
+        private void BTAceptar_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Servidor = TBDireccion.Text;
+            conexion.conexionString = "Data Source=" + Properties.Settings.Default.Servidor + "; Initial Catalog=Transacciones; User id=AdminTransaccion; Password=root";
+            Properties.Settings.Default.Save();
+            MessageBox.Show("Configuracion exitosa!", "Configuracion", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
