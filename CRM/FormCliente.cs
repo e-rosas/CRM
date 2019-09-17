@@ -30,6 +30,7 @@ namespace CRM
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
             TBDireccion.Text = Properties.Settings.Default.Servidor;
             RevisarFacturasPendientes();
             LlenarListaProductos();

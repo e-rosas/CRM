@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CRM
 {
-    public class Sucursal
+    public class Sucursal 
     {
         public string Nombre_Sucursal { get; set; }
         public string Numero { get; set; }
