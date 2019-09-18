@@ -18,8 +18,8 @@ namespace CRM
         //Constructor inicializa evento si hay un cambio en la red e internet.
         public Red()
         {
-            NetworkChange.NetworkAvailabilityChanged += new
-            NetworkAvailabilityChangedEventHandler(CambioDisponibilidad);
+            /*NetworkChange.NetworkAvailabilityChanged += new
+            NetworkAvailabilityChangedEventHandler(CambioDisponibilidad);*/
             Disponibilidad = HayInternet();
         }
 

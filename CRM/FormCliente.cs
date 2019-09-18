@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
+using System.Net.NetworkInformation;
 
 
 //I <3 TS
@@ -44,7 +45,15 @@ namespace CRM
             CBSucursal.DataSource = sucursales;
             CBSucursal.DisplayMember = "Nombre_Sucursal";
             CBSucursal.ValueMember = "Nombre_Sucursal";
-         //new world order 
+
+            NetworkChange.NetworkAvailabilityChanged += CambioDisponibilidad;
+            //new world order 
+        }
+
+        private void CambioDisponibilidad(object sender, NetworkAvailabilityEventArgs e)
+        {
+            MessageBox.Show("cambio de red");
+
         }
 
         private void LlenarListaProductos()

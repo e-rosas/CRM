@@ -36,9 +36,10 @@ namespace CRM
         }
         public bool EnvioTransaccion(Factura factura)
         {
+            conexion.NuevaTransaccion(factura); //al servidor
             try
             {
-               conexion.NuevaTransaccion(factura); //al servidor
+               
                return true;
             }
             catch (Exception)
@@ -79,12 +80,12 @@ namespace CRM
         }
         public string UbicacionFacturas()
         {
-            if (Directory.Exists(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), "Facturas"))) //verificar que existe la carpeta Facturas
+            if (!Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), "Facturas"))) //verificar que existe la carpeta Facturas
             {
                 //crealo
                 Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Facturas"));
             }
-            string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), "Facturas", "facturas.xml");
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), "Facturas", "facturas.xml");
             return path;
         }
         public void NuevoPDF(Factura factura)
