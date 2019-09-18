@@ -10,7 +10,6 @@ namespace CRM
 {
     public class Red : Subject
     {
-        //Guarda los comportamientos de estado de la Red del observador Transaccion.
         private List<Observador> observadores = new List<Observador>();
         //Variable que se le asignara el tipo de disponibilidad de red.
         public bool Disponibilidad;
@@ -18,9 +17,9 @@ namespace CRM
         //Constructor inicializa evento si hay un cambio en la red e internet.
         public Red()
         {
-            /*NetworkChange.NetworkAvailabilityChanged += new
-            NetworkAvailabilityChangedEventHandler(CambioDisponibilidad);*/
-            Disponibilidad = HayInternet();
+            NetworkChange.NetworkAvailabilityChanged += new
+            NetworkAvailabilityChangedEventHandler(CambioDisponibilidad);
+            HayConexion();
         }
 
         //Recorre la lista de observador Actualizar para verificar disponibilidad
@@ -48,21 +47,23 @@ namespace CRM
         //Asignacion de estado de la red cuando detecta un cambio del evento
         private void CambioDisponibilidad(object sender, NetworkAvailabilityEventArgs e)
         {
-            Disponibilidad = e.IsAvailable;
-            NotificarObservadores();
+            //Disponibilidad = e.IsAvailable;
+            HayConexion();
+            //NotificarObservadores();
                       
         }
-        private bool HayInternet()
+        public void HayConexion()
         {
             try
             {
-                System.Net.IPHostEntry host = System.Net.Dns.GetHostEntry(Properties.Settings.Default.Servidor);
-                return true;
+                IPHostEntry host = Dns.GetHostEntry(Properties.Settings.Default.Servidor);
+                Disponibilidad = true;
             }
             catch
             {
-                return false;
+                Disponibilidad = false;
             }
+            NotificarObservadores();
         }
     }
 }

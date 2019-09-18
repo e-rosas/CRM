@@ -178,6 +178,7 @@ namespace CRM
         {
             Properties.Settings.Default.Servidor = TBDireccion.Text;
             Properties.Settings.Default.Save();
+            red.HayConexion();
             transaccion.CambiarStringConexion();
             MessageBox.Show("Configuracion exitosa!", "Configuracion", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
