@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,7 +20,8 @@ namespace CRM
             if (Properties.Settings.Default.Servidor == "NOCONFIGURADO")
             {
                 //primera vez que se ejecuta el programa
-                Application.Run(new FormConfiguracion());
+                Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Facturas"));
+                Application.Run(new FormConfiguracion());         
             }
             else
             {

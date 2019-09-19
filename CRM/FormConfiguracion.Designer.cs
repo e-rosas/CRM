@@ -91,6 +91,7 @@
             this.Controls.Add(this.PConfiguracion);
             this.Name = "FormConfiguracion";
             this.Text = "FormConfiguracion";
+            this.Load += new System.EventHandler(this.FormConfiguracion_Load);
             this.PConfiguracion.ResumeLayout(false);
             this.PConfiguracion.PerformLayout();
             this.ResumeLayout(false);

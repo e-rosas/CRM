@@ -23,5 +23,10 @@ namespace CRM
             Properties.Settings.Default.Save();
             MessageBox.Show("Configuracion exitosa!","Configuracion",MessageBoxButtons.OK,MessageBoxIcon.Information);
         }
+
+        private void FormConfiguracion_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
