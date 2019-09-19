@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.CBProductos = new System.Windows.Forms.ComboBox();
             this.BtnAgregar = new System.Windows.Forms.Button();
             this.TBCantidad = new System.Windows.Forms.TextBox();
@@ -54,11 +54,11 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.TBDireccion = new System.Windows.Forms.TextBox();
+            this.LBConfiguracion = new System.Windows.Forms.Label();
+            this.PConfiguracion = new System.Windows.Forms.Panel();
             this.LBDireccion = new System.Windows.Forms.Label();
             this.BTAceptar = new System.Windows.Forms.Button();
-            this.PConfiguracion = new System.Windows.Forms.Panel();
-            this.LBConfiguracion = new System.Windows.Forms.Label();
+            this.TBDireccion = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DGVProductosFactura)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -101,14 +101,14 @@
             this.DGVProductosFactura.AllowUserToDeleteRows = false;
             this.DGVProductosFactura.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DGVProductosFactura.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.SandyBrown;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVProductosFactura.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.SandyBrown;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVProductosFactura.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.DGVProductosFactura.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVProductosFactura.EnableHeadersVisualStyles = false;
             this.DGVProductosFactura.Location = new System.Drawing.Point(10, 147);
@@ -333,12 +333,25 @@
             this.tabPage2.Text = "CONFIGURACION";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // TBDireccion
+            // LBConfiguracion
             // 
-            this.TBDireccion.Location = new System.Drawing.Point(137, 28);
-            this.TBDireccion.Name = "TBDireccion";
-            this.TBDireccion.Size = new System.Drawing.Size(191, 29);
-            this.TBDireccion.TabIndex = 0;
+            this.LBConfiguracion.AutoSize = true;
+            this.LBConfiguracion.Location = new System.Drawing.Point(398, 14);
+            this.LBConfiguracion.Name = "LBConfiguracion";
+            this.LBConfiguracion.Size = new System.Drawing.Size(136, 21);
+            this.LBConfiguracion.TabIndex = 4;
+            this.LBConfiguracion.Text = "CONFIGURACION";
+            // 
+            // PConfiguracion
+            // 
+            this.PConfiguracion.BackColor = System.Drawing.Color.LightYellow;
+            this.PConfiguracion.Controls.Add(this.LBDireccion);
+            this.PConfiguracion.Controls.Add(this.BTAceptar);
+            this.PConfiguracion.Controls.Add(this.TBDireccion);
+            this.PConfiguracion.Location = new System.Drawing.Point(223, 55);
+            this.PConfiguracion.Name = "PConfiguracion";
+            this.PConfiguracion.Size = new System.Drawing.Size(497, 100);
+            this.PConfiguracion.TabIndex = 3;
             // 
             // LBDireccion
             // 
@@ -359,25 +372,12 @@
             this.BTAceptar.UseVisualStyleBackColor = true;
             this.BTAceptar.Click += new System.EventHandler(this.BTAceptar_Click);
             // 
-            // PConfiguracion
+            // TBDireccion
             // 
-            this.PConfiguracion.BackColor = System.Drawing.Color.LightYellow;
-            this.PConfiguracion.Controls.Add(this.LBDireccion);
-            this.PConfiguracion.Controls.Add(this.BTAceptar);
-            this.PConfiguracion.Controls.Add(this.TBDireccion);
-            this.PConfiguracion.Location = new System.Drawing.Point(223, 55);
-            this.PConfiguracion.Name = "PConfiguracion";
-            this.PConfiguracion.Size = new System.Drawing.Size(497, 100);
-            this.PConfiguracion.TabIndex = 3;
-            // 
-            // LBConfiguracion
-            // 
-            this.LBConfiguracion.AutoSize = true;
-            this.LBConfiguracion.Location = new System.Drawing.Point(398, 14);
-            this.LBConfiguracion.Name = "LBConfiguracion";
-            this.LBConfiguracion.Size = new System.Drawing.Size(136, 21);
-            this.LBConfiguracion.TabIndex = 4;
-            this.LBConfiguracion.Text = "CONFIGURACION";
+            this.TBDireccion.Location = new System.Drawing.Point(137, 28);
+            this.TBDireccion.Name = "TBDireccion";
+            this.TBDireccion.Size = new System.Drawing.Size(191, 29);
+            this.TBDireccion.TabIndex = 0;
             // 
             // FormCliente
             // 

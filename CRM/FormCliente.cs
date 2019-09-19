@@ -10,8 +10,6 @@ using System.IO;
 using System.Net.NetworkInformation;
 
 
-//I <3 TS
-
 namespace CRM
 {
     public partial class FormCliente : Form
@@ -26,7 +24,7 @@ namespace CRM
         {
             InitializeComponent();
             transaccion = new Transaccion(red);
-            transaccion.DisponibilidadRed = red.Disponibilidad; //asignar la disponibilad a la transaccion
+            transaccion.DisponibilidadServidor = red.Disponibilidad; //asignar la disponibilad a la transaccion
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -45,16 +43,8 @@ namespace CRM
             CBSucursal.DataSource = sucursales;
             CBSucursal.DisplayMember = "Nombre_Sucursal";
             CBSucursal.ValueMember = "Nombre_Sucursal";
-
-            NetworkChange.NetworkAvailabilityChanged += CambioDisponibilidad;
-            //new world order 
         }
 
-        private void CambioDisponibilidad(object sender, NetworkAvailabilityEventArgs e)
-        {
-            MessageBox.Show("cambio de red");
-
-        }
 
         private void LlenarListaProductos()
         {
@@ -122,23 +112,25 @@ namespace CRM
             facturaActual.GenerarFolio(sucursalSeleccionada.Numero);
             facturaActual.Fecha = DateTime.Now;
             facturaActual.RFC = sucursalSeleccionada.RFC;
+
+            //Si el Textbox no esta vacio y de valor cumple con estructura de correo electronico.
             if (TBCorreo.Text != "" && transaccion.ValidarCorreo(TBCorreo.Text))
             {
                 facturaActual.Correo = TBCorreo.Text;
-                if (transaccion.DisponibilidadRed) //envia por correo y al servidor
+                transaccion.NuevoPDF(facturaActual); //generacion de PDF y envio de correo
+                //decision de enviar por correo o no...
+                if (transaccion.DisponibilidadServidor) //envia por correo y al servidor
                 {
-                    transaccion.EnvioTransaccion(facturaActual);
-                    transaccion.NuevoPDF(facturaActual); //generacion de PDF y envio de correo
-                    MessageBox.Show("Venta exitosa y fue enviada!", "Notificacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                  
+                    string estado = transaccion.EnvioTransaccion(facturaActual);
+                    MessageBox.Show(estado, "Notificacion", MessageBoxButtons.OK, MessageBoxIcon.Information);                 
                 }
                 else //agrega al archivo de facturas
                 {
                     facturasPendientes.Add(facturaActual);
                     GuardarFactura(transaccion.UbicacionFacturas(), facturasPendientes.ToArray());
-                    MessageBox.Show("Venta pendiente debido a la disponibilidad de red", "Venta pendiente", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("Venta pendiente debido a la disponibilidad de servidor", "Venta pendiente", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
-
+                //despues de una venta exitosa
                 facturaActual = new Factura(); //limpiando los campos
                 DGVProductosFactura.DataSource = facturaActual.productos.ToList();
                 LblSubtotal.Text = "";
@@ -146,12 +138,13 @@ namespace CRM
                 LblTotal.Text = "";
                 LblCantidadProductos.Text = "";
                 TBCorreo.Text = "";
+                BtnFinalizar.Enabled = false;
             }
             else
             {
                 MessageBox.Show("Correo invalido", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+           
         }
 
         private void RevisarFacturasPendientes()
@@ -174,6 +167,7 @@ namespace CRM
             }
         }
 
+        //
         private void BTAceptar_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.Servidor = TBDireccion.Text;

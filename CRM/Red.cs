@@ -13,6 +13,7 @@ namespace CRM
         private List<Observador> observadores = new List<Observador>();
         //Variable que se le asignara el tipo de disponibilidad de red.
         public bool Disponibilidad;
+        public bool DisponibilidadInternet;
         //Estado default: False
         //Constructor inicializa evento si hay un cambio en la red e internet.
         public Red()
@@ -27,7 +28,7 @@ namespace CRM
         {
             foreach(Observador o in observadores)
             {
-                o.Actualizar(Disponibilidad);
+                o.Actualizar(Disponibilidad , DisponibilidadInternet);
             }
         }
 
@@ -52,6 +53,8 @@ namespace CRM
             //NotificarObservadores();
                       
         }
+
+        //Set Estado , Si el estado cambia y se le asigna valor me notifica a mi Observador ...
         public void HayConexion()
         {
             try
@@ -63,7 +66,21 @@ namespace CRM
             {
                 Disponibilidad = false;
             }
+
+
+            try
+            {
+                IPHostEntry host = Dns.GetHostEntry("www.google.com");
+                DisponibilidadInternet = true;
+            }
+            catch
+            {
+                DisponibilidadInternet = false;
+            }
+
             NotificarObservadores();
         }
+
+
     }
 }

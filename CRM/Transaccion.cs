@@ -16,51 +16,53 @@ namespace CRM
     {
         private Subject red;
         Conexion conexion = new Conexion();
-        public bool DisponibilidadRed;
+        public bool DisponibilidadServidor;
+        public bool DisponibilidadInternet;
         public Transaccion(Subject subject) {
             red = subject;
             red.RegistrarObservador(this);
             CambiarStringConexion();
         }
       
-        public void Actualizar(bool disponiblidad)
+        public void Actualizar(bool disponiblidad, bool DisponibilidadInternet)
         {
-            DisponibilidadRed = disponiblidad;
+            DisponibilidadServidor = disponiblidad;
+            this.DisponibilidadInternet = DisponibilidadInternet;
             CambioDisponibilidad();
         }
 
-        //Asigna a la variable conexionString el valores de conexion
+        //Asigna a la variable conexionString los  valores de conexion
         public void CambiarStringConexion()
         {
             conexion.conexionString = "Data Source=" + Properties.Settings.Default.Servidor + "; Initial Catalog=Transacciones; User id=AdminTransaccion; Password=root";
         }
-        public bool EnvioTransaccion(Factura factura)
-        {
-            conexion.NuevaTransaccion(factura); //al servidor
+        public string EnvioTransaccion(Factura factura)
+        {          
             try
             {
-               
-               return true;
+                conexion.NuevaTransaccion(factura); //al servidor
+                return "Venta exitosa y fue enviada!";
             }
             catch (Exception)
             {
-               return false;  //MessageBox.Show("Error de conexion al servidor!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+               return "Venta no enviada al servidor!";  //MessageBox.Show("Error de conexion al servidor!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
         public void CambioDisponibilidad() //maneja el cambio de disponibilidad
         {
             string archivoFacturas = UbicacionFacturas();
-            if (DisponibilidadRed && File.Exists(archivoFacturas))
+
+            if (DisponibilidadServidor && File.Exists(archivoFacturas))
             {
                 //si hay conexion y el archivo existe,  Leer documento facturas.xml, si hay facturas pendientes , enviarlas
-                LeerFacturas(archivoFacturas);
+                LeerFacturasXML(archivoFacturas);
                 //limpiar archivo
                 File.Delete(archivoFacturas);
             }
         }
         //Procesa la informacion del XML y los guarda en arreglo de facturasleidas
-        private void LeerFacturas(string archivo)
+        private void LeerFacturasXML(string archivo)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Factura[]));
             Factura[] facturasLeidas;
@@ -73,7 +75,13 @@ namespace CRM
                 foreach (Factura factura in facturasLeidas)
                 {
                     EnvioTransaccion(factura);
-                    NuevoPDF(factura); //generacion de PDF  y enviar por correo
+                    string ubicacionPDF = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), "Facturas", "factura" + factura.NoFolio + ".pdf");
+                    if (DisponibilidadInternet)
+                    {
+                        EnviarCorreo(factura.Correo, ubicacionPDF);
+                    }
+                    //NuevoPDF(factura); //generacion de PDF  y enviar por correo
+
                 }
             }
 
@@ -84,39 +92,52 @@ namespace CRM
             {
                 //crealo
                 Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Facturas"));
+
             }
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), "Facturas", "facturas.xml");
             return path;
         }
+
+        //Crea PDF en ubicacion MyDocuments/Facturas
         public void NuevoPDF(Factura factura)
-        {
-            Document pdfDoc = new Document(PageSize.A2, 10f, 10f, 10f, 0f);
-            MemoryStream ubicacionEnMemoria = new MemoryStream();
-            PdfWriter writer = PdfWriter.GetInstance(pdfDoc, ubicacionEnMemoria);
-            pdfDoc.Open();
-            pdfDoc.Add(new Paragraph("Numero de folio: " + factura.NoFolio + "           " + factura.Fecha.ToShortDateString()));
-            pdfDoc.Add(new Paragraph("RFC: " + factura.RFC));
-            foreach (Producto producto in factura.productos)
+        {   //Se asigna ruta "MyDocuments", ubica carpeta factura,se guarda bajo el nombre factura+NoFolio
+            string ubicacionPDF = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), "Facturas", "factura"+factura.NoFolio+".pdf");
+            //Abre ubicacion de ruta y genera PDF
+            using (FileStream stream = new FileStream(ubicacionPDF, FileMode.Create))
             {
-                pdfDoc.Add(new Paragraph(
-                      "Producto: " + producto.Nombre
-                    + " Precio unitario: " + producto.Precio
-                    + " Cantidad : " + producto.Cantidad
-                    + " Total: " + producto.Total));
+                Document pdfDoc = new Document(PageSize.A2, 10f, 10f, 10f, 0f);
+                //MemoryStream ubicacionEnMemoria = new MemoryStream();
+                PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
+                pdfDoc.Open();
+                pdfDoc.Add(new Paragraph("Numero de folio: " + factura.NoFolio + "           " + factura.Fecha.ToShortDateString()));
+                pdfDoc.Add(new Paragraph("RFC: " + factura.RFC));
+                foreach (Producto producto in factura.productos)
+                {
+                    pdfDoc.Add(new Paragraph(
+                          "Producto: " + producto.Nombre
+                        + " Precio unitario: " + producto.Precio
+                        + " Cantidad : " + producto.Cantidad
+                        + " Total: " + producto.Total));
+                }
+                pdfDoc.Add(new Paragraph("Subtotal: " + factura.Subtotal + " IVA: " + factura.IVA + " Total :" + factura.Total + " Cantidad productos: " + factura.Cantidad_Productos));
+                writer.CloseStream = false;
+                pdfDoc.Close();
             }
-            pdfDoc.Add(new Paragraph("Subtotal: " + factura.Subtotal + " IVA: " + factura.IVA + " Total :" + factura.Total + " Cantidad productos: " + factura.Cantidad_Productos));
-            writer.CloseStream = false;
-            pdfDoc.Close();
-            ubicacionEnMemoria.Position = 0;
-            EnviarCorreo(factura, ubicacionEnMemoria);
+ 
+            //Se envia correo de factura si esta registrada en el servidor
+            if (DisponibilidadInternet && DisponibilidadServidor)
+            {
+                EnviarCorreo(factura.Correo, ubicacionPDF); 
+            }
+            
         }
 
         public bool ValidarCorreo(string correo)
         {
             try
             {
+                //Instancia a la clase MailAddress de libreria, recibe como valor un string
                 MailAddress m = new MailAddress(correo);
-
                 return true;
             }
             catch (FormatException)
@@ -125,15 +146,15 @@ namespace CRM
             }
         }
 
-        public void EnviarCorreo(Factura factura, MemoryStream ubicacionEnMemoria)
+        public void EnviarCorreo(string correo, string ubicacionPDF)
         {
              MailMessage message = new MailMessage();
              message.From = new MailAddress("practicapatos@gmail.com");
-             message.To.Add(factura.Correo);
+             message.To.Add(correo);
              message.Subject = "Este es un PDF C: ..";
              message.Body = "Contenido del PDF ";
              //Agrega al correo un archivo PDF para enviar.4
-             message.Attachments.Add(new Attachment(ubicacionEnMemoria, "Factura.pdf"));
+             message.Attachments.Add(new Attachment(ubicacionPDF));
              SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
              {
                  Credentials = new NetworkCredential("practicapatos@gmail.com", "Contra123"),
