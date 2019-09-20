@@ -8,6 +8,6 @@ namespace CRM
 {
     public interface Observador
     {
-        void Actualizar(bool disponiblidad, bool DisponibilidadInternet);
+        void Actualizar(bool DisponibilidadInternet);
     }
 }

@@ -16,7 +16,6 @@ namespace CRM
     {
         private Subject red;
         Conexion conexion = new Conexion();
-        public bool DisponibilidadServidor;
         public bool DisponibilidadInternet;
         public Transaccion(Subject subject) {
             red = subject;
@@ -24,9 +23,8 @@ namespace CRM
             CambiarStringConexion();
         }
       
-        public void Actualizar(bool disponiblidad, bool DisponibilidadInternet)
+        public void Actualizar(bool DisponibilidadInternet)
         {
-            DisponibilidadServidor = disponiblidad;
             this.DisponibilidadInternet = DisponibilidadInternet;
             CambioDisponibilidad();
         }
@@ -34,6 +32,7 @@ namespace CRM
         //Asigna a la variable conexionString los  valores de conexion
         public void CambiarStringConexion()
         {
+            // Se establece la cadena que abrira la Base de datos.
             conexion.conexionString = "Server=tcp:desktop.database.windows.net,1433;Initial Catalog=Transacciones;Persist Security Info=False;" +
                 "User ID=adminTransaccion;Password=root1234!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
             //conexion.conexionString = "Data Source=" + Properties.Settings.Default.Servidor + "; Initial Catalog=Transacciones; User id=AdminTransaccion; Password=root";
@@ -55,7 +54,7 @@ namespace CRM
         {
             string archivoFacturas = UbicacionFacturasXML();
 
-            if (DisponibilidadServidor && File.Exists(archivoFacturas))
+            if (DisponibilidadInternet && File.Exists(archivoFacturas))
             {
                 //si hay conexion y el archivo existe,  Leer documento facturas.xml, si hay facturas pendientes , enviarlas
                 LeerFacturasXML(archivoFacturas);
@@ -122,7 +121,7 @@ namespace CRM
             }
  
             //Se envia correo de factura si esta registrada en el servidor
-            if (DisponibilidadInternet && DisponibilidadServidor)
+            if (DisponibilidadInternet)
             {
                 EnviarCorreo(factura.Correo, ubicacionPDF); 
             }
