@@ -33,6 +33,7 @@
             this.LBDireccion = new System.Windows.Forms.Label();
             this.BTAceptar = new System.Windows.Forms.Button();
             this.TBDireccion = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.PConfiguracion.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,6 +49,7 @@
             // PConfiguracion
             // 
             this.PConfiguracion.BackColor = System.Drawing.Color.LightYellow;
+            this.PConfiguracion.Controls.Add(this.button1);
             this.PConfiguracion.Controls.Add(this.LBDireccion);
             this.PConfiguracion.Controls.Add(this.BTAceptar);
             this.PConfiguracion.Controls.Add(this.TBDireccion);
@@ -82,6 +84,16 @@
             this.TBDireccion.Size = new System.Drawing.Size(191, 20);
             this.TBDireccion.TabIndex = 0;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(211, 65);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
             // FormConfiguracion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -106,5 +118,6 @@
         private System.Windows.Forms.Label LBDireccion;
         private System.Windows.Forms.Button BTAceptar;
         private System.Windows.Forms.TextBox TBDireccion;
+        private System.Windows.Forms.Button button1;
     }
 }
