@@ -24,7 +24,7 @@ namespace CRM
         {
             InitializeComponent();
             transaccion = new Transaccion(red);
-            transaccion.DisponibilidadServidor = red.Disponibilidad; //asignar la disponibilad a la transaccion
+            transaccion.DisponibilidadInternet = false;// red.DisponibilidadInternet; //asignar la disponibilad a la transaccion
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -74,27 +74,30 @@ namespace CRM
         private void BtnAgregar_Click(object sender, EventArgs e)
         {
             Producto productoSeleccionado = (Producto)CBProductos.SelectedItem;
-            if(TBCantidad.Text == "0" || TBCantidad.Text == "")
+            int cantidad = 0;
+            //primero se debe intentar asignar lo que hay en TBCantidad a cantidad, y luego la se compara
+            if (Int32.TryParse(TBCantidad.Text, out cantidad) && cantidad > 0) 
             {
-                //cantidad invalida
-                MessageBox.Show("Cantidad invalida","Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                productoSeleccionado.Cantidad = Convert.ToInt32(TBCantidad.Text);
+                //cantidad valida
+                productoSeleccionado.Cantidad = cantidad;
                 productoSeleccionado.CalcularTotal();
 
                 //agregar el producto a la lista de productos de factura
                 facturaActual.AgregarProducto(productoSeleccionado);
                 DGVProductosFactura.DataSource = facturaActual.productos.ToList(); //vincula la lista de productos de la factura con el datagridview
                 facturaActual.CalcularSubtotal(); //calcula todo
-                                            //Actualizar labels 
+                                                  //Actualizar labels 
                 LblSubtotal.Text = facturaActual.Subtotal.ToString();
                 LblIVA.Text = facturaActual.IVA.ToString();
                 LblTotal.Text = facturaActual.Total.ToString();
                 LblCantidadProductos.Text = facturaActual.Cantidad_Productos.ToString();
                 BtnFinalizar.Enabled = true;
-            }           
+                
+            }
+            else
+            {
+                MessageBox.Show("Cantidad invalida", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }         
         }
 
         private void CBProductos_SelectedIndexChanged(object sender, EventArgs e)
@@ -117,7 +120,7 @@ namespace CRM
                 facturaActual.Correo = TBCorreo.Text;
                 transaccion.NuevoPDF(facturaActual); //generacion de PDF y envio de correo
                 //decision de enviar por correo o no...
-                if (transaccion.DisponibilidadServidor) //envia por correo y al servidor
+                if (transaccion.DisponibilidadInternet) //envia por correo y al servidor
                 {
                     string estado = transaccion.EnvioTransaccion(facturaActual);
                     MessageBox.Show(estado, "Notificacion", MessageBoxButtons.OK, MessageBoxIcon.Information);                 

@@ -26,6 +26,7 @@ namespace CRM
         public void Actualizar(bool DisponibilidadInternet)
         {
             this.DisponibilidadInternet = DisponibilidadInternet;
+            //si hay facturas pendientes
             CambioDisponibilidad();
         }
 
@@ -37,6 +38,8 @@ namespace CRM
                 "User ID=adminTransaccion;Password=root1234!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
             //conexion.conexionString = "Data Source=" + Properties.Settings.Default.Servidor + "; Initial Catalog=Transacciones; User id=AdminTransaccion; Password=root";
         }
+
+        //retorna string si la transaccion se registro o no.
         public string EnvioTransaccion(Factura factura)
         {          
             try
@@ -50,6 +53,9 @@ namespace CRM
             }
 
         }
+
+        //Permite leer las facturas pendientes si hay internet. (XML)
+        //Identifica si existe archivo XML
         public void CambioDisponibilidad() //maneja el cambio de disponibilidad
         {
             string archivoFacturas = UbicacionFacturasXML();
@@ -62,7 +68,9 @@ namespace CRM
                 File.Delete(archivoFacturas);
             }
         }
-        //Procesa la informacion del XML y los guarda en arreglo de facturasleidas
+
+        //Persistencia de datos.
+        //Procesa la informacion del XML y los guarda en arreglo de facturasleidas, recorre mi arreglo y registra transaccion y envia correo.
         private void LeerFacturasXML(string archivo)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Factura[]));
@@ -72,13 +80,13 @@ namespace CRM
                 facturasLeidas = (Factura[])serializer.Deserialize(fs);
             }
             if (facturasLeidas.Length > 0)
-            {
+            {   
                 foreach (Factura factura in facturasLeidas)
-                {
+                {   //Envia transaccion y correo electronco
                     EnvioTransaccion(factura);
                     string ubicacionPDF = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), "Facturas", "factura" + factura.NoFolio + ".pdf");
                     if (DisponibilidadInternet)
-                    {
+                    {   //Envia correo y obtiene la ubicacion en donde esta el PDF que enviaraa
                         EnviarCorreo(factura.Correo, ubicacionPDF);
                     }
                     //NuevoPDF(factura); //generacion de PDF  y enviar por correo
@@ -87,6 +95,8 @@ namespace CRM
             }
 
         }
+
+        //Retorna ruta de mi archivo XML
         public string UbicacionFacturasXML()
         {
          
@@ -95,6 +105,7 @@ namespace CRM
         }
 
         //Crea PDF en ubicacion MyDocuments/Facturas
+        //Se genera PDF instanceando mis clases factura y producto en base a una ruta definida.
         public void NuevoPDF(Factura factura)
         {   //Se asigna ruta "MyDocuments", ubica carpeta factura,se guarda bajo el nombre factura+NoFolio
             string ubicacionPDF = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), "Facturas", "factura"+factura.NoFolio+".pdf");
@@ -104,7 +115,7 @@ namespace CRM
                 Document pdfDoc = new Document(PageSize.A2, 10f, 10f, 10f, 0f);
                 //MemoryStream ubicacionEnMemoria = new MemoryStream();
                 PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
-                pdfDoc.Open();
+                pdfDoc.Open(); //instancio los valores de mi objeto factura
                 pdfDoc.Add(new Paragraph("Numero de folio: " + factura.NoFolio + "           " + factura.Fecha.ToShortDateString()));
                 pdfDoc.Add(new Paragraph("RFC: " + factura.RFC));
                 foreach (Producto producto in factura.productos)
@@ -141,19 +152,19 @@ namespace CRM
                 return false;
             }
         }
-
+        //Envia correo electronico
         public void EnviarCorreo(string correo, string ubicacionPDF)
         {
              MailMessage message = new MailMessage();
-             message.From = new MailAddress("practicapatos@gmail.com");
+             message.From = new MailAddress("cliente.test23@gmail.com");
              message.To.Add(correo);
              message.Subject = "Este es un PDF C: ..";
              message.Body = "Contenido del PDF ";
-             //Agrega al correo un archivo PDF para enviar.4
+             //Agrega al correo un archivo PDF para enviar.
              message.Attachments.Add(new Attachment(ubicacionPDF));
              SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
              {
-                 Credentials = new NetworkCredential("practicapatos@gmail.com", "Contra123"),
+                 Credentials = new NetworkCredential("cliente.test23@gmail.com", "Contra1234"),
                  EnableSsl = true
              };
              try
