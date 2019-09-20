@@ -24,7 +24,7 @@ namespace CRM
         {
             InitializeComponent();
             transaccion = new Transaccion(red);
-            transaccion.DisponibilidadInternet = false;// red.DisponibilidadInternet; //asignar la disponibilad a la transaccion
+            transaccion.DisponibilidadInternet = red.DisponibilidadInternet; //asignar la disponibilad a la transaccion
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -46,15 +46,19 @@ namespace CRM
 
         private void LlenarListaProductos()
         {
-            Producto p1 = new Producto();
-            p1.Nombre = "Gatos";
-            p1.Precio = 15;
-            p1.Cantidad = 7;
-            productosDisponibles.Add(p1);
-            productosDisponibles.Add(new Producto() { Nombre ="PARACETAMOL", Precio = 25, Cantidad = 1 });
-            productosDisponibles.Add(new Producto() { Nombre = "REFRESCO", Precio = 15, Cantidad = 1 });
-            productosDisponibles.Add(new Producto() { Nombre = "CHOCOLATE", Precio = 10, Cantidad = 1 });
-            productosDisponibles.Add(new Producto() { Nombre = "CARGADOR", Precio = 250, Cantidad = 1 });
+            
+            productosDisponibles.Add(new Producto() { Nombre = "Aceite", Precio = 18, Cantidad = 1 });
+            productosDisponibles.Add(new Producto() { Nombre = "Aderezo", Precio = 15, Cantidad = 1 });
+            productosDisponibles.Add(new Producto() { Nombre = "Avena", Precio = 12, Cantidad = 1 });
+            productosDisponibles.Add(new Producto() { Nombre = "Tortillas", Precio = 17, Cantidad = 1 });
+            productosDisponibles.Add(new Producto() { Nombre = "Refresco", Precio = 16, Cantidad = 1 });
+            productosDisponibles.Add(new Producto() { Nombre = "Sabrita", Precio = 12, Cantidad = 1 });
+            productosDisponibles.Add(new Producto() { Nombre = "Mayonessa", Precio = 20, Cantidad = 1 });
+            productosDisponibles.Add(new Producto() { Nombre = "Leche", Precio = 43, Cantidad = 1 });
+            productosDisponibles.Add(new Producto() { Nombre = "Yogurt", Precio = 8, Cantidad = 1 });
+            productosDisponibles.Add(new Producto() { Nombre = "Chocolate", Precio = 5, Cantidad = 1 });
+            productosDisponibles.Add(new Producto() { Nombre = "Galletas", Precio = 13, Cantidad = 1 });
+
         }
         private void LlenarListaSucursales()
         {
@@ -102,9 +106,17 @@ namespace CRM
 
         private void CBProductos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Producto productoSeleccionado = (Producto)CBProductos.SelectedItem;
-            TBCantidad.Text = productoSeleccionado.Cantidad.ToString();
-            LblPrecioUnitario.Text = productoSeleccionado.Precio.ToString();
+            try
+            {
+                Producto productoSeleccionado = (Producto)CBProductos.SelectedItem;
+                TBCantidad.Text = productoSeleccionado.Cantidad.ToString();
+                LblPrecioUnitario.Text = productoSeleccionado.Precio.ToString();
+            }
+            catch (Exception)
+            {
+                TBCantidad.Text = "1";
+                LblPrecioUnitario.Text = "0";
+            }
 
         }
         private void BtnFinalizar_Click(object sender, EventArgs e)
@@ -139,6 +151,14 @@ namespace CRM
                 LblTotal.Text = "";
                 LblCantidadProductos.Text = "";
                 TBCorreo.Text = "";
+                //limpiar lista de productos
+                productosDisponibles.Clear();
+                CBProductos.DataSource = null;
+                LlenarListaProductos();
+                //volver a ligar con el combobox
+                CBProductos.DataSource = productosDisponibles;
+                CBProductos.DisplayMember = "Nombre";
+                CBProductos.ValueMember = "Nombre";
                 BtnFinalizar.Enabled = false;
             }
             else

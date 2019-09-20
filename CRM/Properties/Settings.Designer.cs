@@ -22,17 +22,5 @@ namespace CRM.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("NOCONFIGURADO")]
-        public string Servidor {
-            get {
-                return ((string)(this["Servidor"]));
-            }
-            set {
-                this["Servidor"] = value;
-            }
-        }
     }
 }

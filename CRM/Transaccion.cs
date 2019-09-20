@@ -164,13 +164,14 @@ namespace CRM
              message.Attachments.Add(new Attachment(ubicacionPDF));
              SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
              {
-                 Credentials = new NetworkCredential("cliente.test23@gmail.com", "Contra1234"),
+                 Credentials = new NetworkCredential("servidor.test.23@gmail.com", "contra1234"),
                  EnableSsl = true
              };
-             try
+            
+            try
              {
-                 client.Send(message);
-             }
+                client.Send(message);
+            }
              catch (Exception)
              {
                     //MessageBox.Show("Error de envio!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
