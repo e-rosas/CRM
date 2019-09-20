@@ -17,16 +17,22 @@ namespace CRM
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if (Properties.Settings.Default.Servidor == "NOCONFIGURADO")
-            {
-                //primera vez que se ejecuta el programa
-                Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Facturas"));
-                Application.Run(new FormConfiguracion());         
-            }
-            else
+
+            //primera vez que se ejecuta el programa
+            Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Facturas"));
+            FormConfiguracion config = new FormConfiguracion();
+            config.ShowDialog();
+            if(config.DialogResult == DialogResult.OK)
             {
                 Application.Run(new FormCliente());
             }
+            else if(config.DialogResult == DialogResult.Yes)
+            {
+                Application.Run(new FormServidor());
+            }
+            
+
+          
             
         }
     }

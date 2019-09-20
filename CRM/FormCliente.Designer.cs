@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.CBProductos = new System.Windows.Forms.ComboBox();
             this.BtnAgregar = new System.Windows.Forms.Button();
             this.TBCantidad = new System.Windows.Forms.TextBox();
@@ -53,17 +53,9 @@
             this.label7 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.LBConfiguracion = new System.Windows.Forms.Label();
-            this.PConfiguracion = new System.Windows.Forms.Panel();
-            this.LBDireccion = new System.Windows.Forms.Label();
-            this.BTAceptar = new System.Windows.Forms.Button();
-            this.TBDireccion = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DGVProductosFactura)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.PConfiguracion.SuspendLayout();
             this.SuspendLayout();
             // 
             // CBProductos
@@ -101,14 +93,14 @@
             this.DGVProductosFactura.AllowUserToDeleteRows = false;
             this.DGVProductosFactura.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DGVProductosFactura.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.SandyBrown;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVProductosFactura.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.SandyBrown;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVProductosFactura.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DGVProductosFactura.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVProductosFactura.EnableHeadersVisualStyles = false;
             this.DGVProductosFactura.Location = new System.Drawing.Point(10, 147);
@@ -284,7 +276,6 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(12, 35);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -321,64 +312,6 @@
             this.tabPage1.Text = "VENTAS";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.LBConfiguracion);
-            this.tabPage2.Controls.Add(this.PConfiguracion);
-            this.tabPage2.Location = new System.Drawing.Point(4, 30);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(945, 440);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "CONFIGURACION";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // LBConfiguracion
-            // 
-            this.LBConfiguracion.AutoSize = true;
-            this.LBConfiguracion.Location = new System.Drawing.Point(398, 14);
-            this.LBConfiguracion.Name = "LBConfiguracion";
-            this.LBConfiguracion.Size = new System.Drawing.Size(136, 21);
-            this.LBConfiguracion.TabIndex = 4;
-            this.LBConfiguracion.Text = "CONFIGURACION";
-            // 
-            // PConfiguracion
-            // 
-            this.PConfiguracion.BackColor = System.Drawing.Color.LightYellow;
-            this.PConfiguracion.Controls.Add(this.LBDireccion);
-            this.PConfiguracion.Controls.Add(this.BTAceptar);
-            this.PConfiguracion.Controls.Add(this.TBDireccion);
-            this.PConfiguracion.Location = new System.Drawing.Point(223, 55);
-            this.PConfiguracion.Name = "PConfiguracion";
-            this.PConfiguracion.Size = new System.Drawing.Size(497, 100);
-            this.PConfiguracion.TabIndex = 3;
-            // 
-            // LBDireccion
-            // 
-            this.LBDireccion.AutoSize = true;
-            this.LBDireccion.Location = new System.Drawing.Point(16, 31);
-            this.LBDireccion.Name = "LBDireccion";
-            this.LBDireccion.Size = new System.Drawing.Size(115, 21);
-            this.LBDireccion.TabIndex = 1;
-            this.LBDireccion.Text = "DIRECCION IP :";
-            // 
-            // BTAceptar
-            // 
-            this.BTAceptar.Location = new System.Drawing.Point(368, 22);
-            this.BTAceptar.Name = "BTAceptar";
-            this.BTAceptar.Size = new System.Drawing.Size(87, 38);
-            this.BTAceptar.TabIndex = 2;
-            this.BTAceptar.Text = "ACEPTAR";
-            this.BTAceptar.UseVisualStyleBackColor = true;
-            this.BTAceptar.Click += new System.EventHandler(this.BTAceptar_Click);
-            // 
-            // TBDireccion
-            // 
-            this.TBDireccion.Location = new System.Drawing.Point(137, 28);
-            this.TBDireccion.Name = "TBDireccion";
-            this.TBDireccion.Size = new System.Drawing.Size(191, 29);
-            this.TBDireccion.TabIndex = 0;
-            // 
             // FormCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -400,10 +333,6 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            this.PConfiguracion.ResumeLayout(false);
-            this.PConfiguracion.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -435,12 +364,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Label LBConfiguracion;
-        private System.Windows.Forms.Panel PConfiguracion;
-        private System.Windows.Forms.Label LBDireccion;
-        private System.Windows.Forms.Button BTAceptar;
-        private System.Windows.Forms.TextBox TBDireccion;
     }
 }
 

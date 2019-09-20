@@ -34,7 +34,9 @@ namespace CRM
         //Asigna a la variable conexionString los  valores de conexion
         public void CambiarStringConexion()
         {
-            conexion.conexionString = "Data Source=" + Properties.Settings.Default.Servidor + "; Initial Catalog=Transacciones; User id=AdminTransaccion; Password=root";
+            conexion.conexionString = "Server=tcp:desktop.database.windows.net,1433;Initial Catalog=Transacciones;Persist Security Info=False;" +
+                "User ID=adminTransaccion;Password=root1234!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
+            //conexion.conexionString = "Data Source=" + Properties.Settings.Default.Servidor + "; Initial Catalog=Transacciones; User id=AdminTransaccion; Password=root";
         }
         public string EnvioTransaccion(Factura factura)
         {          
@@ -51,7 +53,7 @@ namespace CRM
         }
         public void CambioDisponibilidad() //maneja el cambio de disponibilidad
         {
-            string archivoFacturas = UbicacionFacturas();
+            string archivoFacturas = UbicacionFacturasXML();
 
             if (DisponibilidadServidor && File.Exists(archivoFacturas))
             {
@@ -86,14 +88,9 @@ namespace CRM
             }
 
         }
-        public string UbicacionFacturas()
+        public string UbicacionFacturasXML()
         {
-            if (!Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), "Facturas"))) //verificar que existe la carpeta Facturas
-            {
-                //crealo
-                Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Facturas"));
-
-            }
+         
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), "Facturas", "facturas.xml");
             return path;
         }

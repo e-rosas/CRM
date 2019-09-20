@@ -29,8 +29,6 @@ namespace CRM
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-            TBDireccion.Text = Properties.Settings.Default.Servidor;
             RevisarFacturasPendientes();
             LlenarListaProductos();
             LlenarListaSucursales();
@@ -127,7 +125,7 @@ namespace CRM
                 else //agrega al archivo de facturas
                 {
                     facturasPendientes.Add(facturaActual);
-                    GuardarFactura(transaccion.UbicacionFacturas(), facturasPendientes.ToArray());
+                    GuardarFactura(transaccion.UbicacionFacturasXML(), facturasPendientes.ToArray());
                     MessageBox.Show("Venta pendiente debido a la disponibilidad de servidor", "Venta pendiente", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
                 //despues de una venta exitosa
@@ -167,14 +165,5 @@ namespace CRM
             }
         }
 
-        //
-        private void BTAceptar_Click(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.Servidor = TBDireccion.Text;
-            Properties.Settings.Default.Save();
-            red.HayConexion();
-            transaccion.CambiarStringConexion();
-            MessageBox.Show("Configuracion exitosa!", "Configuracion", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
     }
 }
